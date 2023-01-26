@@ -29,7 +29,7 @@ async function makeRequest(accessToken, url) {
 }
 
 app.get("/foodbanks", async (req, res) => {
-    var url = 'https://org6e7090ee.api.crm4.dynamics.com/api/data/v9.2/cr967_foodbanks?$select=cr967_name,cr967_address';
+    var url = 'https://org6e7090ee.api.crm4.dynamics.com/api/data/v9.2/cr967_foodbanks?$select=cr967_name,cr967_address,cr967_image,cr967,cr967_foodbankid';
 
     var bearerToken = await getToken();
 
@@ -50,8 +50,8 @@ app.get("/items", async (req, res) => {
     res.json({ "items": json_content });
 })
 
-app.listen(3000, async () => {
+app.listen(8080, async () => {
 
-    console.log("app listening on port 3000")
+    console.log("app listening on port 8080")
 
 })

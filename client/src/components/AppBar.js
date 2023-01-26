@@ -17,7 +17,7 @@ const AppBar = () => {
             onChange={(event, newValue) => {
                 setValue(newValue);
             }}
-            sx={{ position: "absolute", bottom: 0, width: "100%" }}>
+            sx={{ position: "fixed", bottom: 0, width: "100%", height: "7vh", bgcolor: '#fff111'}}>
             <BottomNavigationAction label="Foodbanks"
                 value="foodbanks" icon={<RestoreIcon />} onClick={() => navigate('/foodbanks')} />
             <BottomNavigationAction label="Items"
