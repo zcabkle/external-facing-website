@@ -2,6 +2,7 @@ import React from "react";
 import FoodbanksPage from "./FoodbanksPage";
 import StockPage from "./StockPage";
 import FoodbankPage from "./FoodbankPage";
+import ItemPage from "./ItemPage";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 function ApplicationRouter() {
@@ -11,7 +12,7 @@ function ApplicationRouter() {
             <Route path="foodbanks" element={<FoodbanksPage />} />
             <Route path="items" element={<StockPage />} />
             <Route path="foodbanks/:id" element={<FoodbankPage />} />
-            <Route path="items/:id" />
+            <Route path="items/:id" element={<ItemPage/>} />
         </Routes>
     )
 }

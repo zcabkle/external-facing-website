@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from "react"
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import "./styles.css"
+import "../styles.css"
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import StockItem from "./StockItem";
+import FoodbankListItem from "../components/FoodbankListItem";
 
-const StockPage = () => {
-  const [items, setItems] = useState([]);
+const FoodbanksPage = () => {
+  const [foodbanks, setFoodbanks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
     try {
-      fetch("http://localhost:8080/items")
+      fetch("http://localhost:8080/foodbanks")
         .then(res => res.json())
-        .then(res => setItems(res.items.value))
+        .then(res => setFoodbanks(res.foodbanks.value))
         .then(() => setLoading(false));
     } catch (e) {
       setLoading(false);
@@ -24,17 +24,14 @@ const StockPage = () => {
     }
   }, []);
 
-  if (loading || error) {
+  if (loading) {
     return <span>{error || 'Loading...'}</span>;
   }
 
-  //const listItems = items.map((d) => <li key={d.cr967_name}>{d.cr967_name}</li>);
-  //const listItemsButtons = items.map((d) => <li><Button variant='contained'>{d.cr967_name}</Button></li>)
-
-  const listObject = <List sx={{ bgcolor: '#ff0000' }} >
-    {items.map((d) => (
+  const listObject = <List sx={{ bgcolor: '#FF2D00' }} >
+    {foodbanks.map((d) => (
       <ListItem>
-        <StockItem name={d.cr967_name}/>
+        <FoodbankListItem name={d.cr967_name} address={d.cr967_address} image={d.cr967_image} guid={d.cr967_foodbankid}/>
       </ListItem>
     ))}
   </List>
@@ -43,8 +40,8 @@ const StockPage = () => {
     <Container maxWidth="100%">
       <CssBaseline />
       <Box sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', height: '93vh' }}>
-        <Box sx={{ bgcolor: '#fff111', height: '7vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-          <h1>Items</h1>
+        <Box sx={{ bgcolor: '#00126b', height: '7vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+          <h1>Foodbanks</h1>
         </Box>
         <Box sx={{ overflow: 'auto', bgcolor: 'fff111', height: '86vh' }}>
           {listObject}
@@ -54,4 +51,4 @@ const StockPage = () => {
   );
 };
 
-export default StockPage;
+export default FoodbanksPage;
