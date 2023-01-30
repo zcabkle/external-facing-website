@@ -28,7 +28,7 @@ const FoodbanksPage = () => {
     return <span>{error || 'Loading...'}</span>;
   }
 
-  const listObject = <List sx={{ bgcolor: '#FF2D00' }} >
+  const listObject = <List >
     {foodbanks.map((d) => (
       <ListItem>
         <FoodbankListItem name={d.cr967_name} address={d.cr967_address} image={d.cr967_image} guid={d.cr967_foodbankid}/>

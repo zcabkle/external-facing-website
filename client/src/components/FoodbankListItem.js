@@ -2,6 +2,7 @@ import '../styles.css';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
+import Button from '@mui/material/Button';
 
 function FoodbankListItem({ name, address, image, guid }) {
   const source = 'data:image/png;base64,'.concat(' ').concat(image);
@@ -37,7 +38,7 @@ function FoodbankListItem({ name, address, image, guid }) {
 
         <Grid item xs={1} >
           <Box>
-            <a href={url}><ArrowCircleRightOutlinedIcon style={{ color: '#00126b' }} /></a>
+            <Button><a href={url}><ArrowCircleRightOutlinedIcon style={{ color: '#00126b' }} /></a></Button>
           </Box>
         </Grid>
 

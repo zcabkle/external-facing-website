@@ -28,10 +28,7 @@ const StockPage = () => {
     return <span>{error || 'Loading...'}</span>;
   }
 
-  //const listItems = items.map((d) => <li key={d.cr967_name}>{d.cr967_name}</li>);
-  //const listItemsButtons = items.map((d) => <li><Button variant='contained'>{d.cr967_name}</Button></li>)
-
-  const listObject = <List sx={{ bgcolor: '#FF2D00' }} >
+  const listObject = <List>
     {items.map((d) => (
       <ListItem>
         <StockListItem name={d.cr967_name} image={d.cr967_image} guid={d.cr967_itemid} description={d.cr967_description} />
