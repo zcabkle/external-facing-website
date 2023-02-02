@@ -36,6 +36,9 @@ const FoodbanksPage = () => {
     ))}
   </List>
 
+  // Cache the foodbanks and their id and store in a dictionary and set to window.cached_keys.
+  // Also cache foodbanks state
+
   return (
     <Container maxWidth="100%">
       <CssBaseline />

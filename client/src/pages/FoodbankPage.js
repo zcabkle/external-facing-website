@@ -32,7 +32,7 @@ const FoodbankPage = () => {
             <CssBaseline />
             <Box sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', height: '93vh' }}>
                 <Box sx={{ bgcolor: '#00126b', height: '7vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <h1>Information about {foodbankInfo[0].cr967_name}</h1>
+                    <h3>Information about {foodbankInfo[0].cr967_name}</h3>
                 </Box>
                 <Box sx={{ overflow: 'auto', bgcolor: 'fff111', height: '86vh' }}>
                     <FoodbankInfo name={foodbankInfo[0].cr967_name} address={foodbankInfo[0].cr967_address} image={foodbankInfo[0].cr967_image} guid={guid} />

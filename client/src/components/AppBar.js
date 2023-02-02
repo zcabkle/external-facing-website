@@ -6,7 +6,6 @@ import PinDropIcon from '@mui/icons-material/PinDrop';
 import StoreIcon from '@mui/icons-material/Store';
 import { grey } from '@mui/material/colors';
 
-
 const AppBar = () => {
 
     const [value, setValue] = useState(0);

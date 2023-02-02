@@ -55,7 +55,7 @@ app.get('/foodbanks/:id', async (req, res) => {
 })
 
 app.get("/items", async (req, res) => {
-    var url = 'https://org6e7090ee.api.crm4.dynamics.com/api/data/v9.2/cr967_items?$filter=cr967_shareitemwith eq 2&$select=cr967_name,cr967_image,cr967_description,cr967_itemid,cr967_stocklevel';
+    var url = 'https://org6e7090ee.api.crm4.dynamics.com/api/data/v9.2/cr967_items?$filter=cr967_shareitemwith eq 2&$select=cr967_name,cr967_image,cr967_description,cr967_itemid, cr967_quantity,cr967_stocklevel, cr967_shareitemwith,cr967_sharequantitywith, cr967_sharestocklevelwith,_cr967_foodbankkey_value';
 
     var bearerToken = await getToken();
 
