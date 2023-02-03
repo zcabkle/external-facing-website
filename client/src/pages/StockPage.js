@@ -31,7 +31,7 @@ const StockPage = () => {
   const listObject = <List>
     {items.map((d) => (
       <ListItem>
-        <StockListItem name={d.cr967_name} image={d.cr967_image} guid={d.cr967_itemid} description={d.cr967_description} />
+        <StockListItem name={d.cr967_name} image={d.cr967_image} guid={d.cr967_itemid} description={d.cr967_description} qty={d.cr967_quantity} share_qty={d.cr967_sharequantitywith} stocklvl={d.cr967_stocklevel} share_stocklvl={d.cr967_sharestocklevelwith} foodbankkey={d._cr967_foodbankkey_value} />
       </ListItem>
     ))}
   </List>
