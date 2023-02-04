@@ -1,8 +1,8 @@
 import {
-  Box, Container, Grid, Typography, Button, Card
+  Box, Container, Grid, Typography, Card
 } from'@mui/material'
-import ItemListTable from '../components/Items/ItemListTable';
-import { ListFilters } from '../components/product-list-filters';
+import ItemListTable from '../components/Items/item-list-table';
+import { ListFilters } from '../components/Items/item-list-filters';
 
 const NewItemsPage = () => {
   return (
@@ -25,9 +25,7 @@ const NewItemsPage = () => {
                 Items
               </Typography>
             </Grid>
-            
           </Grid>
-          
         </Box>
         <Card>
           <ListFilters/>

@@ -1,9 +1,9 @@
 import { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Chip, Divider, Input, Typography } from '@mui/material';
-import { useUpdateEffect } from '../hooks/use-update-effect';
-import { Search as SearchIcon } from '../icons/search';
-import { MultiSelect } from './multi-select';
+import { useUpdateEffect } from '../../hooks/use-update-effect';
+import { Search as SearchIcon } from '../../icons/search';
+import { MultiSelect } from '../multi-select';
 
 const categoryOptions = [
   {
@@ -45,16 +45,16 @@ const statusOptions = [
 
 const stockOptions = [
   {
-    label: 'All',
-    value: 'all'
+    label: 'Understocked',
+    value: 'understocked'
   },
   {
-    label: 'Available',
-    value: 'available'
+    label: 'Neither',
+    value: 'neither'
   },
   {
-    label: 'Out of Stock',
-    value: 'outOfStock'
+    label: 'Overstocked',
+    value: 'overstocked'
   }
 ];
 
