@@ -1,4 +1,3 @@
-import '../styles.css';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';

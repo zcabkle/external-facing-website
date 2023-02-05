@@ -251,7 +251,7 @@ const ItemListTable = (props) => {
                           color="textSecondary"
                           variant="body2"
                         >
-                          {item.cr967_name}
+                          {"Name of foodbank will go here"}
                         </Typography>
                       </TableCell>
                     </TableRow>
