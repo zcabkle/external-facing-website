@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect } from 'react';
+import { Fragment } from 'react';
 import {
   Box,
   Card,
@@ -21,9 +21,7 @@ const FoodbankListTable = (props) => {
     onRowsPerPageChange,
     page,
     foodbanks,
-    productsCount,
     rowsPerPage,
-    ...other
   } = props;
 
   /* const [foodbanks, setFoodbanks] = useState([]);

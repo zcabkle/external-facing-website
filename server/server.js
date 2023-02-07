@@ -29,7 +29,7 @@ async function makeRequest(accessToken, url) {
 }
 
 app.get("/foodbanks", async (req, res) => {
-    var url = 'https://org6e7090ee.api.crm4.dynamics.com/api/data/v9.2/cr967_foodbanks?$select=cr967_name,cr967_address,cr967_image,cr967_foodbankid';
+    var url = 'https://org6e7090ee.api.crm4.dynamics.com/api/data/v9.2/cr967_foodbanks?$select=cr967_name,cr967_address,cr967_image,cr967_foodbankid,cr967_email,cr967_operatinghours,cr967_postcode,cr967_town';
 
     var bearerToken = await getToken();
 

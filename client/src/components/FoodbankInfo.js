@@ -11,7 +11,7 @@ function FoodbankInfo({ name, address, image, guid }) {
         spacing: 0.5,
         alignItems: 'center',
       }}>
-        <Grid item xs={12} style={{textAlign: "center"}}><img src={source} alt='Image of the foodbank' className='list-image' /></Grid>
+        <Grid item xs={12} style={{textAlign: "center"}}><img src={source} alt='Foodbank' className='list-image' /></Grid>
         
         <p>{name}</p>
         <p>{address}</p>

@@ -46,14 +46,14 @@ const getCategory = (n) => {
   }
 }
 
-const ItemListTable = (props) => {
+const FoodbankListTable = (props) => {
 
   const {
     onPageChange,
     onRowsPerPageChange,
     page,
-    items,
-    itemsCount,
+    foodbanks,
+    foodbanksCount,
     rowsPerPage,
   } = props;
   const [openProduct, setOpenProduct] = useState(null);
@@ -61,6 +61,8 @@ const ItemListTable = (props) => {
   const handleOpenProduct = (productId) => {
     setOpenProduct((prevValue) => (prevValue === productId ? null : productId));
   };
+
+  console.log("made to page");
 
 
   return (
@@ -75,29 +77,29 @@ const ItemListTable = (props) => {
                   Name
                 </TableCell>
                 <TableCell width="25%">
-                  Description
+                  Address
                 </TableCell>
                 <TableCell>
-                  Quantity
+                  Address
                 </TableCell>
                 <TableCell>
-                  Stock Level
+                  Name
                 </TableCell>
                 <TableCell>
-                  Foodbank
+                  Name
                 </TableCell>
               </TableRow>
             </TableHead>
 
             <TableBody>
-              {items.map((item) => {
-                const open = item.cr967_itemid === openProduct;
+              {foodbanks.map((foodbank) => {
+                const open = foodbank.cr967_foodbankid === openProduct;
 
                 return (
-                  <Fragment key={item.cr967_itemid}>
+                  <Fragment key={foodbank.cr967_foodbankid}>
                     <TableRow
                       hover
-                      key={item.cr967_itemid}
+                      key={foodbank.cr967_foodbankid}
                     >
                       <TableCell
                         padding="checkbox"
@@ -117,7 +119,7 @@ const ItemListTable = (props) => {
                         }}
                         width="25%"
                       >
-                        <IconButton onClick={() => handleOpenProduct(item.cr967_itemid)}>
+                        <IconButton onClick={() => handleOpenProduct(foodbank.cr967_foodbankid)}>
                           {open
                             ? <ChevronDownIcon fontSize="small" />
                             : <ChevronRightIcon fontSize="small" />}
@@ -130,7 +132,7 @@ const ItemListTable = (props) => {
                             display: 'flex'
                           }}
                         >
-                          {item.cr967_image
+                          {foodbank.cr967_image
                             ? (
                               <Box
                                 component="img"
@@ -147,7 +149,7 @@ const ItemListTable = (props) => {
                                   overflow: 'hidden',
                                   width: 80
                                 }}
-                                src={'data:image/png;base64,'.concat(' ').concat(item.cr967_image)}
+                                src={'data:image/png;base64,'.concat(' ').concat(foodbank.cr967_image)}
                               />
                             )
                             : (
@@ -172,7 +174,7 @@ const ItemListTable = (props) => {
                             }}
                           >
                             <Typography variant="subtitle2">
-                              {item.cr967_name}
+                              {foodbank.cr967_name}
                             </Typography>
                           </Box>
                         </Box>
@@ -182,7 +184,7 @@ const ItemListTable = (props) => {
                           color="textSecondary"
                           variant="body2"
                         >
-                          {item.cr967_description ? item.cr967_description : "No description given."}
+                          {foodbank.cr967_address}
                         </Typography>
                       </TableCell>
                       <TableCell>
@@ -190,20 +192,19 @@ const ItemListTable = (props) => {
                           color="textSecondary"
                           variant="body2"
                         >
-                          {item.cr967_sharequantitywith === 2 ?
-                            item.cr967_quantity : "Quantity not being shared."}
+                          {foodbank.cr967_address}
                         </Typography>
                       </TableCell>
                       <TableCell>
-                        {item.cr967_sharestocklevelwith === 2 &&
+                        {foodbank.cr967_sharestocklevelwith === 2 &&
                           <Box>
                             <SeverityPill color={
                               (() => {
-                                if (item.cr967_stocklevel === 0) {
+                                if (foodbank.cr967_stocklevel === 0) {
                                   return (
                                     'error'
                                   )
-                                } else if (item.cr967_stocklevel === 1) {
+                                } else if (foodbank.cr967_stocklevel === 1) {
                                   return (
                                     'info'
                                   )
@@ -216,11 +217,11 @@ const ItemListTable = (props) => {
                             }>
                               {
                                 (() => {
-                                  if (item.cr967_stocklevel === 0) {
+                                  if (foodbank.cr967_stocklevel === 0) {
                                     return (
                                       "UNDERSTOCKED"
                                     )
-                                  } else if (item.cr967_stocklevel === 1) {
+                                  } else if (foodbank.cr967_stocklevel === 1) {
                                     return (
                                       "NEITHER"
                                     )
@@ -236,10 +237,10 @@ const ItemListTable = (props) => {
                               color="textSecondary"
                               variant="body2"
                             >
-                              {item.cr967_stocklevel === 0 && "Donations requested!"}
+                              {foodbank.cr967_stocklevel === 0 && "Donations requested!"}
                             </Typography></Box>}
                         {
-                          item.cr967_sharestocklevelwith !== 2 && <Typography
+                          foodbank.cr967_sharestocklevelwith !== 2 && <Typography
                             color="textSecondary"
                             variant="body2"
                           > Stock level not being shared.</Typography>
@@ -296,7 +297,7 @@ const ItemListTable = (props) => {
                                     xs={12}
                                   >
                                     <TextField
-                                      defaultValue={item.cr967_name}
+                                      defaultValue={foodbank.cr967_name}
                                       fullWidth
                                       label="Name"
                                       name="name"
@@ -311,7 +312,7 @@ const ItemListTable = (props) => {
                                     xs={12}
                                   >
                                     <TextField
-                                      defaultValue={item.cr967_description ? item.cr967_description : "No description given."}
+                                      defaultValue={foodbank.cr967_name}
                                       fullWidth
                                       label="Description"
                                       name="description"
@@ -326,7 +327,7 @@ const ItemListTable = (props) => {
                                     xs={12}
                                   >
                                     <TextField
-                                      defaultValue={getCategory(item.cr967_itemcategory)}
+                                      defaultValue={getCategory(foodbank.cr967_itemcategory)}
                                       fullWidth
                                       label="Item Category"
                                       name="category"
@@ -370,7 +371,7 @@ const ItemListTable = (props) => {
                                     xs={12}
                                   >
                                     <TextField
-                                      defaultValue={item.cr967_quantity}
+                                      defaultValue={foodbank.cr967_quantity}
                                       fullWidth
                                       InputProps={{
                                         readOnly: true,
@@ -388,11 +389,11 @@ const ItemListTable = (props) => {
                                     <TextField
                                       defaultValue={
                                         (() => {
-                                          if (item.cr967_stocklevel === 0) {
+                                          if (foodbank.cr967_stocklevel === 0) {
                                             return (
                                               "Understocked"
                                             )
-                                          } else if (item.cr967_stocklevel === 1) {
+                                          } else if (foodbank.cr967_stocklevel === 1) {
                                             return (
                                               "Neither"
                                             )
@@ -447,7 +448,7 @@ const ItemListTable = (props) => {
         </Scrollbar>
         <TablePagination
           component="div"
-          count={itemsCount}
+          count={foodbanksCount}
           onPageChange={onPageChange}
           onRowsPerPageChange={onRowsPerPageChange}
           page={page}
@@ -459,4 +460,4 @@ const ItemListTable = (props) => {
   );
 };
 
-export default ItemListTable;
+export default FoodbankListTable;
