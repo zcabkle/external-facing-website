@@ -76,6 +76,18 @@ app.get('/items/:id', async (req, res) => {
     res.json({ "items": json_content });
 })
 
+app.get('/parcels/:id', async (req, res) => {
+    var id = req.params.id;
+    var url = `https://org6e7090ee.api.crm4.dynamics.com/api/data/v9.2/cr967_parcels?$filter=_cr967_foodbankkey_value eq ${id} and cr967_shareparcelwith eq 2&$select=cr967_name,cr967_image,cr967_description,cr967_parcelpk`;
+
+    var bearerToken = await getToken();
+
+    var response = await makeRequest(bearerToken, url);
+    var json_content = await response.json();
+    console.log(json_content)
+    res.json({ "parcels": json_content });
+})
+
 app.listen(8080, async () => {
     console.log("app listening on port 8080")
 })

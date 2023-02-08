@@ -13,22 +13,47 @@ import {
   Grid,
   Divider,
   TextField,
-  CardContent,
-  Link
+  CardContent
 } from '@mui/material';
 import { ChevronRight as ChevronRightIcon } from '../../icons/chevron-right';
 import { ChevronDown as ChevronDownIcon } from '../../icons/chevron-down';
 import { Image as ImageIcon } from '../../icons/image';
 import { Scrollbar } from '../scrollbar';
+import { SeverityPill } from '../severity-pill';
 
-const FoodbankListTable = (props) => {
+const getCategory = (n) => {
+  switch (n) {
+    case 0:
+      return "Fresh/Fruit/Veg";
+    case 1:
+      return "Dairy";
+    case 2:
+      return "Toiletries";
+    case 3:
+      return "Cereal";
+    case 4:
+      return "Canned";
+    case 5:
+      return "Meat";
+    case 6:
+      return "Bread";
+    case 7:
+      return "Miscellaneous";
+    case 8:
+      return "Dry Food/Long Life";
+    default:
+      return "HERE";
+  }
+}
+
+const FoodbankParcelsListTable = (props) => {
 
   const {
     onPageChange,
     onRowsPerPageChange,
     page,
-    foodbanks,
-    foodbanksCount,
+    parcels,
+    parcelsCount,
     rowsPerPage,
   } = props;
   const [openProduct, setOpenProduct] = useState(null);
@@ -49,29 +74,26 @@ const FoodbankListTable = (props) => {
                   Name
                 </TableCell>
                 <TableCell width="25%">
-                  Address
+                  Description
                 </TableCell>
                 <TableCell>
-                  Town
+                  Quantity
                 </TableCell>
                 <TableCell>
-                  Contact Number
-                </TableCell>
-                <TableCell>
-                  Contact Email
+                  Stock Level
                 </TableCell>
               </TableRow>
             </TableHead>
 
             <TableBody>
-              {foodbanks.map((foodbank) => {
-                const open = foodbank.cr967_foodbankid === openProduct;
+              {parcels.map((parcel) => {
+                const open = parcel.cr967_parcelpk === openProduct;
 
                 return (
-                  <Fragment key={foodbank.cr967_foodbankid}>
+                  <Fragment key={parcel.cr967_parcelpk }>
                     <TableRow
                       hover
-                      key={foodbank.cr967_foodbankid}
+                      key={parcel.cr967_parcelpk}
                     >
                       <TableCell
                         padding="checkbox"
@@ -91,7 +113,7 @@ const FoodbankListTable = (props) => {
                         }}
                         width="25%"
                       >
-                        <IconButton onClick={() => handleOpenProduct(foodbank.cr967_foodbankid)}>
+                        <IconButton onClick={() => handleOpenProduct(parcel.cr967_parcelpk)}>
                           {open
                             ? <ChevronDownIcon fontSize="small" />
                             : <ChevronRightIcon fontSize="small" />}
@@ -104,7 +126,7 @@ const FoodbankListTable = (props) => {
                             display: 'flex'
                           }}
                         >
-                          {foodbank.cr967_image
+                          {parcel.cr967_image
                             ? (
                               <Box
                                 component="img"
@@ -121,7 +143,7 @@ const FoodbankListTable = (props) => {
                                   overflow: 'hidden',
                                   width: 80
                                 }}
-                                src={'data:image/png;base64,'.concat(' ').concat(foodbank.cr967_image)}
+                                src={'data:image/png;base64,'.concat(' ').concat(parcel.cr967_image)}
                               />
                             )
                             : (
@@ -146,7 +168,7 @@ const FoodbankListTable = (props) => {
                             }}
                           >
                             <Typography variant="subtitle2">
-                              {foodbank.cr967_name}
+                              {parcel.cr967_name}
                             </Typography>
                           </Box>
                         </Box>
@@ -156,7 +178,9 @@ const FoodbankListTable = (props) => {
                           color="textSecondary"
                           variant="body2"
                         >
-                          {foodbank.cr967_address}
+
+                          {parcel.cr967_description ? <div style={{whiteSpace: 'pre-line'}}>{parcel.cr967_description}</div> : "No description given."}
+
                         </Typography>
                       </TableCell>
                       <TableCell>
@@ -164,22 +188,60 @@ const FoodbankListTable = (props) => {
                           color="textSecondary"
                           variant="body2"
                         >
-                          {foodbank.cr967_town}
+                          {parcel.cr967_sharequantitywith === 2 ?
+                            parcel.cr967_quantity : "Quantity not being shared."}
                         </Typography>
                       </TableCell>
                       <TableCell>
-                        <Typography color="textSecondary"
-                          variant="body2">
-                          {foodbank.cr967_phonenumber}
-                        </Typography>
-                      </TableCell>
-                      <TableCell>
-                        <Typography
-                          color="textSecondary"
-                          variant="body2"
-                        >
-                          {foodbank.cr967_email}
-                        </Typography>
+                        {parcel.cr967_sharestocklevelwith === 2 &&
+                          <Box>
+                            <SeverityPill color={
+                              (() => {
+                                if (parcel.cr967_stocklevel === 0) {
+                                  return (
+                                    'error'
+                                  )
+                                } else if (parcel.cr967_stocklevel === 1) {
+                                  return (
+                                    'info'
+                                  )
+                                } else {
+                                  return (
+                                    'success'
+                                  )
+                                }
+                              })()
+                            }>
+                              {
+                                (() => {
+                                  if (parcel.cr967_stocklevel === 0) {
+                                    return (
+                                      "UNDERSTOCKED"
+                                    )
+                                  } else if (parcel.cr967_stocklevel === 1) {
+                                    return (
+                                      "NEITHER"
+                                    )
+                                  } else {
+                                    return (
+                                      "OVERSTOCKED"
+                                    )
+                                  }
+                                })()
+                              }
+                            </SeverityPill>
+                            <Typography
+                              color="textSecondary"
+                              variant="body2"
+                            >
+                              {parcel.cr967_stocklevel === 0 && "Donations requested!"}
+                            </Typography></Box>}
+                        {
+                          parcel.cr967_sharestocklevelwith !== 2 && <Typography
+                            color="textSecondary"
+                            variant="body2"
+                          > Stock level not being shared.</Typography>
+                        }
                       </TableCell>
 
                     </TableRow>
@@ -212,11 +274,8 @@ const FoodbankListTable = (props) => {
                                 xs={12}
                               >
                                 <Typography variant="h6">
-                                  Details - <Link href={"/items/" + foodbank.cr967_foodbankid}> View the stock at this foodbank </Link>
-                                <Link href={"/parcels/" + foodbank.cr967_foodbankid}> View the parcels at this foodbank </Link>
-                                  
+                                  Details
                                 </Typography>
-
                                 <Divider sx={{ my: 2 }} />
                                 <Grid
                                   container
@@ -228,7 +287,7 @@ const FoodbankListTable = (props) => {
                                     xs={12}
                                   >
                                     <TextField
-                                      defaultValue={foodbank.cr967_name}
+                                      defaultValue={parcel.cr967_name}
                                       fullWidth
                                       label="Name"
                                       name="name"
@@ -242,19 +301,15 @@ const FoodbankListTable = (props) => {
                                     md={6}
                                     xs={12}
                                   >
-
                                     <TextField
-                                      defaultValue={foodbank.cr967_address}
+                                      defaultValue={parcel.cr967_description ? parcel.cr967_description : "No description given."}
                                       fullWidth
+                                      label="Description"
+                                      name="description"
                                       InputProps={{
                                         readOnly: true,
                                       }}
-                                      label="Address"
-                                      name="address"
-                                      type="address"
                                     />
-
-
                                   </Grid>
                                   <Grid
                                     item
@@ -262,9 +317,9 @@ const FoodbankListTable = (props) => {
                                     xs={12}
                                   >
                                     <TextField
-                                      defaultValue={foodbank.cr967_phonenumber}
+                                      defaultValue={getCategory(parcel.cr967_itemcategory)}
                                       fullWidth
-                                      label="Phone number"
+                                      label="Item Category"
                                       name="category"
                                       InputProps={{
                                         readOnly: true,
@@ -278,12 +333,12 @@ const FoodbankListTable = (props) => {
                                     xs={12}
                                   >
                                     <TextField
-                                      defaultValue={foodbank.cr967_town + ", " + foodbank.cr967_postcode}
+                                      defaultValue={"Link to the stock at this foodbank"}
+                                      disabled
                                       fullWidth
-                                      label="Town & Postcode"
-                                      name="town&postcode"
+                                      label="Foodbank"
+                                      name="foodbank"
                                     />
-
                                   </Grid>
                                 </Grid>
                               </Grid>
@@ -306,13 +361,14 @@ const FoodbankListTable = (props) => {
                                     xs={12}
                                   >
                                     <TextField
-                                      defaultValue={foodbank.cr967_email}
+                                      defaultValue={parcel.cr967_quantity}
                                       fullWidth
-                                      label="Email"
-                                      name="email"
                                       InputProps={{
                                         readOnly: true,
                                       }}
+                                      label="Quantity"
+                                      name="quantity"
+                                      type="number"
                                     />
                                   </Grid>
                                   <Grid
@@ -321,19 +377,31 @@ const FoodbankListTable = (props) => {
                                     xs={12}
                                   >
                                     <TextField
-                                      defaultValue={foodbank.cr967_operatinghours}
+                                      defaultValue={
+                                        (() => {
+                                          if (parcel.cr967_stocklevel === 0) {
+                                            return (
+                                              "Understocked"
+                                            )
+                                          } else if (parcel.cr967_stocklevel === 1) {
+                                            return (
+                                              "Neither"
+                                            )
+                                          } else {
+                                            return (
+                                              "Overstocked"
+                                            )
+                                          }
+                                        })()
+                                      }
                                       fullWidth
-                                      label="Operating Hours"
-                                      name="operatinghours"
+                                      label="Stock level"
+                                      name="stock-level"
                                       InputProps={{
                                         readOnly: true,
                                       }}
-                                      id="outlined-multiline-flexible"
-                                      multiline
-                                      rows={4}
                                     />
                                   </Grid>
-
                                   <Grid
                                     item
                                     md={6}
@@ -343,7 +411,7 @@ const FoodbankListTable = (props) => {
                                       display: 'flex'
                                     }}
                                   >
-
+                          
                                   </Grid>
                                 </Grid>
                               </Grid>
@@ -370,7 +438,7 @@ const FoodbankListTable = (props) => {
         </Scrollbar>
         <TablePagination
           component="div"
-          count={foodbanksCount}
+          count={parcelsCount}
           onPageChange={onPageChange}
           onRowsPerPageChange={onRowsPerPageChange}
           page={page}
@@ -382,4 +450,4 @@ const FoodbankListTable = (props) => {
   );
 };
 
-export default FoodbankListTable;
+export default FoodbankParcelsListTable;
