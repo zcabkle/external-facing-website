@@ -6,7 +6,7 @@ import {
   } from '@mui/material';
 
 
-const NewFoodbankItemsPage = () => {
+const FoodbankItemsPage = () => {
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -89,4 +89,4 @@ const NewFoodbankItemsPage = () => {
       );
     };
     
-    export default NewFoodbankItemsPage;
+    export default FoodbankItemsPage;

@@ -6,7 +6,7 @@ import FoodbankListTable from '../components/Foodbanks/foodbank-list-table';
 import { ListFilters } from '../components/Foodbanks/foodbank-list-filters';
 import { useEffect } from 'react';
 
-const NewFoodbanksPage = () => {
+const FoodbanksPage = () => {
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -87,4 +87,4 @@ const NewFoodbanksPage = () => {
   );
 };
 
-export default NewFoodbanksPage;
+export default FoodbanksPage;

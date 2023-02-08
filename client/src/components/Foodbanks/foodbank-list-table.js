@@ -215,8 +215,8 @@ const FoodbankListTable = (props) => {
                                 xs={12}
                               >
                                 <Typography variant="h6">
-                                  Details - <Link href={"/testitems/" + foodbank.cr967_foodbankid}> View the stock at this foodbank </Link>
-                                  <Link href={"/testparcels/" + foodbank.cr967_foodbankid}> View the parcels at this foodbank </Link>
+                                  Details - <Link href={"/items/" + foodbank.cr967_foodbankid}> View the stock at this foodbank </Link>
+                                <Link href={"/parcels/" + foodbank.cr967_foodbankid}> View the parcels at this foodbank </Link>
                                   
                                 </Typography>
 

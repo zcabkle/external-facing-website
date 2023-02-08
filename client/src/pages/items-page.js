@@ -6,7 +6,7 @@ import ItemListTable from '../components/Items/item-list-table';
 import { ListFilters } from '../components/Items/item-list-filters';
 import { useEffect } from 'react';
 
-const NewItemsPage = () => {
+const ItemsPage = () => {
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -87,4 +87,4 @@ const NewItemsPage = () => {
   );
 };
 
-export default NewItemsPage;
+export default ItemsPage;
