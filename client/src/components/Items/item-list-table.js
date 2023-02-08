@@ -55,6 +55,7 @@ const ItemListTable = (props) => {
     items,
     itemsCount,
     rowsPerPage,
+    tags,
   } = props;
   const [openProduct, setOpenProduct] = useState(null);
 
@@ -250,7 +251,7 @@ const ItemListTable = (props) => {
                           color="textSecondary"
                           variant="body2"
                         >
-                          {"Name of foodbank will go here"}
+                          {tags.filter(tag => tag.cr967_foodbankid === item._cr967_foodbankkey_value)[0].cr967_name}
                         </Typography>
                       </TableCell>
                     </TableRow>

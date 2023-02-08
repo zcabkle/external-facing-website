@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Chip, Divider, Input, Typography } from '@mui/material';
 import { useUpdateEffect } from '../../hooks/use-update-effect';
@@ -28,40 +28,66 @@ export const ListFilters = (props) => {
   const { onChange, ...other } = props;
   const [queryValue, setQueryValue] = useState('');
   const [filterItems, setFilterItems] = useState([]);
+  const [foodbanks, setFoodbanks] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/getFoodbanks")
+      .then(res => res.json())
+      .then(
+        res => {
+          setFoodbanks(res.foodbank_names.value)
+        }
+      )
+  }, []);
+
+  var foodbank_tags = foodbanks.map(foodbank => {
+    const container = {};
+
+    container['label'] = foodbank.cr967_name;
+    container['value'] = foodbank.cr967_foodbankid;
+
+    return container;
+  })
+
+  const foodbankOptions = [{label:'All', value:'all'}].concat(foodbank_tags);
 
   useUpdateEffect(() => {
-      const filters = {
-        name: undefined,
-        category: [],
-        status: [],
-        inStock: undefined
-      };
+    const filters = {
+      name: undefined,
+      category: [],
+      status: [],
+      inStock: undefined,
+      foodbank: undefined,
+    };
 
-      // Transform the filter items in an object that can be used by the parent component to call the
-      // serve with the updated filters
-      filterItems.forEach((filterItem) => {
-        switch (filterItem.field) {
-          case 'name':
-            // There will (or should) be only one filter item with field "name"
-            // so we can set up it directly
-            filters.name = filterItem.value;
-            break;
-          case 'category':
-            filters.category.push(filterItem.value);
-            break;
-          case 'status':
-            filters.status.push(filterItem.value);
-            break;
-          case 'inStock':
-            filters.inStock = filterItem.value;
-            break;
-          default:
-            break;
-        }
-      });
+    // Transform the filter items in an object that can be used by the parent component to call the
+    // serve with the updated filters
+    filterItems.forEach((filterItem) => {
+      switch (filterItem.field) {
+        case 'name':
+          // There will (or should) be only one filter item with field "name"
+          // so we can set up it directly
+          filters.name = filterItem.value;
+          break;
+        /* case 'category':
+          filters.category.push(filterItem.value);
+          break;
+        case 'status':
+          filters.status.push(filterItem.value);
+          break; */
+        case 'inStock':
+          filters.inStock = filterItem.value;
+          break;
+        case 'foodbank':
+          filters.foodbank = filterItem.value;
+          break;
+        default:
+          break;
+      }
+    });
 
-      onChange?.(filters);
-    },
+    onChange?.(filters);
+  },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [filterItems]);
 
@@ -135,13 +161,13 @@ export const ListFilters = (props) => {
           });
           break;
         case 'neither':
-            newFilterItems.push({
-              label: 'Stock',
-              field: 'inStock',
-              value: 'neither',
-              displayValue: 'Neither'
-            });
-            break;
+          newFilterItems.push({
+            label: 'Stock',
+            field: 'inStock',
+            value: 'neither',
+            displayValue: 'Neither'
+          });
+          break;
         default:
           // Should be "all", so we do not add this filter
           break;
@@ -150,6 +176,7 @@ export const ListFilters = (props) => {
       return newFilterItems;
     });
   };
+  
 
   const stockValues = useMemo(() => {
     const values = filterItems
@@ -215,9 +242,9 @@ export const ListFilters = (props) => {
                     }}
                   >
                     <>
-                        <span>
-                          {filterItem.label}
-                        </span>
+                      <span>
+                        {filterItem.label}
+                      </span>
                       :
                       {' '}
                       {filterItem.displayValue || filterItem.value}

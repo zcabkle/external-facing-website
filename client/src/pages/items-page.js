@@ -11,6 +11,7 @@ const ItemsPage = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [items, setItems] = useState([]);
+  const [foodbanks, setFoodbanks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [filters, setFilters] = useState({
@@ -24,7 +25,12 @@ const ItemsPage = () => {
     try {
       fetch("http://localhost:8080/items")
         .then(res => res.json())
-        .then(res => setItems(res.items.value))
+        .then(
+          res => {
+            setItems(res.items.value);
+            setFoodbanks(res.foodbank_names.value)
+          }
+        )
         .then(() => setLoading(false))
     } catch (e) {
       setLoading(false);
@@ -33,14 +39,15 @@ const ItemsPage = () => {
   }, []);
 
   const applyFilters = (products, filters) => products.filter((product) => {
-    /* if (filters.name) {
+    if (filters.name) {
       const nameMatched = product.cr967_name.toLowerCase().includes(filters.name.toLowerCase());
-  
+
       if (!nameMatched) {
         return false;
       }
     }
-  
+
+    /*
     // It is possible to select multiple category options
     if (filters.category?.length > 0) {
       const categoryMatched = filters.category.includes(product.category);
@@ -58,30 +65,25 @@ const ItemsPage = () => {
         return false;
       }
     }*/
-  
+
     // Present only if filter required
     if (typeof filters.inStock !== 'undefined') {
 
       var stockMatched = false;
 
       if (filters.inStock === 'understocked' && product.cr967_stocklevel === 0 && product.cr967_sharestocklevelwith === 2) {
-        console.log("here, understocked")
         stockMatched = true
       } else if (filters.inStock === 'neither' && product.cr967_stocklevel === 1 && product.cr967_sharestocklevelwith === 2) {
-        console.log("here, neither")
         stockMatched = true
       } else if (filters.inStock === 'overstocked' && product.cr967_stocklevel === 2 && product.cr967_sharestocklevelwith === 2) {
-        console.log("here, overstocked")
         stockMatched = true
-      } else {
-        stockMatched = false
       }
-  
+
       if (!stockMatched) {
         return false;
       }
     }
-  
+
     return true;
   });
 
@@ -146,6 +148,7 @@ const ItemsPage = () => {
               onRowsPerPageChange={handleRowsPerPageChange}
               items={paginatedItems}
               itemsCount={items.length}
+              tags={foodbanks}
               page={page}
               rowsPerPage={rowsPerPage} /></Card>)}
       </Container>
