@@ -5,45 +5,11 @@ import { useUpdateEffect } from '../../hooks/use-update-effect';
 import { Search as SearchIcon } from '../../icons/search';
 import { MultiSelect } from '../multi-select';
 
-const categoryOptions = [
-  {
-    label: 'Healthcare',
-    value: 'healthcare'
-  },
-  {
-    label: 'Makeup',
-    value: 'makeup'
-  },
-  {
-    label: 'Dress',
-    value: 'dress'
-  },
-  {
-    label: 'Skincare',
-    value: 'skincare'
-  },
-  {
-    label: 'Jewelry',
-    value: 'jewelry'
-  },
-  {
-    label: 'Blouse',
-    value: 'blouse'
-  }
-];
-
-const statusOptions = [
-  {
-    label: 'Published',
-    value: 'published'
-  },
-  {
-    label: 'Draft',
-    value: 'draft'
-  }
-];
-
 const stockOptions = [
+  {
+    label: 'All',
+    value: 'all'
+  },
   {
     label: 'Understocked',
     value: 'understocked'
@@ -55,7 +21,7 @@ const stockOptions = [
   {
     label: 'Overstocked',
     value: 'overstocked'
-  }
+  },
 ];
 
 export const ListFilters = (props) => {
@@ -87,8 +53,7 @@ export const ListFilters = (props) => {
             filters.status.push(filterItem.value);
             break;
           case 'inStock':
-            // The value can be "available" or "outOfStock" and we transform it to a boolean
-            filters.inStock = filterItem.value === 'available';
+            filters.inStock = filterItem.value;
             break;
           default:
             break;
@@ -142,88 +107,6 @@ export const ListFilters = (props) => {
     }
   };
 
-  const handleCategoryChange = (values) => {
-    setFilterItems((prevState) => {
-      const valuesFound = [];
-
-      // First cleanup the previous filter items
-      const newFilterItems = prevState.filter((filterItem) => {
-        if (filterItem.field !== 'category') {
-          return true;
-        }
-
-        const found = values.includes(filterItem.value);
-
-        if (found) {
-          valuesFound.push(filterItem.value);
-        }
-
-        return found;
-      });
-
-      // Nothing changed
-      if (values.length === valuesFound.length) {
-        return newFilterItems;
-      }
-
-      values.forEach((value) => {
-        if (!valuesFound.includes(value)) {
-          const option = categoryOptions.find((option) => option.value === value);
-
-          newFilterItems.push({
-            label: 'Category',
-            field: 'category',
-            value,
-            displayValue: option.label
-          });
-        }
-      });
-
-      return newFilterItems;
-    });
-  };
-
-  const handleStatusChange = (values) => {
-    setFilterItems((prevState) => {
-      const valuesFound = [];
-
-      // First cleanup the previous filter items
-      const newFilterItems = prevState.filter((filterItem) => {
-        if (filterItem.field !== 'status') {
-          return true;
-        }
-
-        const found = values.includes(filterItem.value);
-
-        if (found) {
-          valuesFound.push(filterItem.value);
-        }
-
-        return found;
-      });
-
-      // Nothing changed
-      if (values.length === valuesFound.length) {
-        return newFilterItems;
-      }
-
-      values.forEach((value) => {
-        if (!valuesFound.includes(value)) {
-          const option = statusOptions.find((option) => option.value === value);
-
-          newFilterItems.push({
-            label: 'Status',
-            field: 'status',
-            value,
-            displayValue: option.label
-          });
-        }
-      });
-
-      return newFilterItems;
-    });
-  };
-
   const handleStockChange = (values) => {
     // Stock can only have one value, even if displayed as multi-select, so we select the first one.
     // This example allows you to select one value or "All", which is not included in the
@@ -235,22 +118,30 @@ export const ListFilters = (props) => {
       const latestValue = values[values.length - 1];
 
       switch (latestValue) {
-        case 'available':
+        case 'understocked':
           newFilterItems.push({
             label: 'Stock',
             field: 'inStock',
-            value: 'available',
-            displayValue: 'Available'
+            value: 'understocked',
+            displayValue: 'Understocked'
           });
           break;
-        case 'outOfStock':
+        case 'overstocked':
           newFilterItems.push({
             label: 'Stock',
             field: 'inStock',
-            value: 'outOfStock',
-            displayValue: 'Out of Stock'
+            value: 'overstocked',
+            displayValue: 'Overstocked'
           });
           break;
+        case 'neither':
+            newFilterItems.push({
+              label: 'Stock',
+              field: 'inStock',
+              value: 'neither',
+              displayValue: 'Neither'
+            });
+            break;
         default:
           // Should be "all", so we do not add this filter
           break;
@@ -259,15 +150,6 @@ export const ListFilters = (props) => {
       return newFilterItems;
     });
   };
-
-  // We memoize this part to prevent re-render issues
-  const categoryValues = useMemo(() => filterItems
-    .filter((filterItems) => filterItems.field === 'category')
-    .map((filterItems) => filterItems.value), [filterItems]);
-
-  const statusValues = useMemo(() => filterItems
-    .filter((filterItems) => filterItems.field === 'status')
-    .map((filterItems) => filterItems.value), [filterItems]);
 
   const stockValues = useMemo(() => {
     const values = filterItems
@@ -368,18 +250,6 @@ export const ListFilters = (props) => {
           p: 1
         }}
       >
-        <MultiSelect
-          label="Category"
-          onChange={handleCategoryChange}
-          options={categoryOptions}
-          value={categoryValues}
-        />
-        <MultiSelect
-          label="Status"
-          onChange={handleStatusChange}
-          options={statusOptions}
-          value={statusValues}
-        />
         <MultiSelect
           label="Stock"
           onChange={handleStockChange}
