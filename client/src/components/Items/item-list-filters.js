@@ -47,12 +47,6 @@ export const ListFilters = (props) => {
           // so we can set up it directly
           filters.name = filterItem.value;
           break;
-        /* case 'category':
-          filters.category.push(filterItem.value);
-          break;
-        case 'status':
-          filters.status.push(filterItem.value);
-          break; */
         case 'inStock':
           filters.inStock = filterItem.value;
           break;

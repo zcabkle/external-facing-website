@@ -15,8 +15,6 @@ const FoodbankItemsPage = () => {
   const [foodbanks, setFoodbanks] = useState([]);
   const [filters, setFilters] = useState({
     name: undefined,
-    category: [],
-    status: [],
     inStock: undefined
   });
 
@@ -37,6 +35,50 @@ const FoodbankItemsPage = () => {
     }
   }, []);
 
+  var temp_foodbank_tags = foodbanks.map(foodbank => {
+    const container = {};
+
+    container['label'] = foodbank.cr967_name;
+    container['value'] = foodbank.cr967_foodbankid;
+
+    return container;
+  })
+
+  const foodbank_tags = [{label:'All', value:'all'}].concat(temp_foodbank_tags);
+
+  const applyFilters = (products, filters) => products.filter((product) => {
+    if (filters.name) {
+      const nameMatched = product.cr967_name.toLowerCase().includes(filters.name.toLowerCase());
+
+      if (!nameMatched) {
+        return false;
+      }
+    }
+
+    if (typeof filters.inStock !== 'undefined') {
+
+      var stockMatched = false;
+
+      if (filters.inStock === 'understocked' && product.cr967_stocklevel === 0 && product.cr967_sharestocklevelwith === 2) {
+        stockMatched = true
+      } else if (filters.inStock === 'neither' && product.cr967_stocklevel === 1 && product.cr967_sharestocklevelwith === 2) {
+        stockMatched = true
+      } else if (filters.inStock === 'overstocked' && product.cr967_stocklevel === 2 && product.cr967_sharestocklevelwith === 2) {
+        stockMatched = true
+      }
+
+      if (!stockMatched) {
+        return false;
+      }
+    }
+
+    return true;
+  });
+
+  const handleFiltersChange = (filters) => {
+    setFilters(filters);
+  };
+
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
   };
@@ -48,7 +90,8 @@ const FoodbankItemsPage = () => {
   const applyPagination = (products, page, rowsPerPage) => products.slice(page * rowsPerPage,
     page * rowsPerPage + rowsPerPage);
 
-  const paginatedItems = applyPagination(items, page, rowsPerPage);
+  const filteredItems = applyFilters(items, filters);
+  const paginatedItems = applyPagination(filteredItems, page, rowsPerPage);
 
   const foodbankName = foodbanks?.filter((foodbank) => foodbank.cr967_foodbankid === guid)[0]?.cr967_name
   console.log(foodbankName)
@@ -91,7 +134,7 @@ const FoodbankItemsPage = () => {
           </Card>
         ) : (
           <Card>
-            <ListFilters />
+            <ListFilters onChange={handleFiltersChange} foodbankOptions={foodbank_tags}/>
             <FoodbankItemsListTable
               onPageChange={handlePageChange}
               onRowsPerPageChange={handleRowsPerPageChange}

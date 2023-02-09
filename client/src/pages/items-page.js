@@ -18,7 +18,8 @@ const ItemsPage = () => {
     name: undefined,
     category: [],
     status: [],
-    inStock: undefined
+    inStock: undefined,
+    foodbank: undefined,
   });
 
   useEffect(() => {
@@ -58,25 +59,6 @@ const ItemsPage = () => {
       }
     }
 
-    /*
-    // It is possible to select multiple category options
-    if (filters.category?.length > 0) {
-      const categoryMatched = filters.category.includes(product.category);
-  
-      if (!categoryMatched) {
-        return false;
-      }
-    }
-  
-    // It is possible to select multiple status options
-    if (filters.status?.length > 0) {
-      const statusMatched = filters.status.includes(product.status);
-  
-      if (!statusMatched) {
-        return false;
-      }
-    }*/
-
     // Present only if filter required
     if (typeof filters.inStock !== 'undefined') {
 
@@ -94,7 +76,6 @@ const ItemsPage = () => {
         return false;
       }
     }
-
 
     if (typeof filters.foodbank !== 'undefined') {
 
