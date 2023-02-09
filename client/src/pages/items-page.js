@@ -95,6 +95,19 @@ const ItemsPage = () => {
       }
     }
 
+   if (typeof filters.foodbank !== 'undefined') {
+
+      var foodbankMatched = false;
+
+      if (filters.foodbank === product._cr967_foodbankkey_value) {
+        foodbankMatched = true
+      }
+
+      if (!foodbankMatched) {
+        return false;
+      }
+    }
+
     return true;
   });
 

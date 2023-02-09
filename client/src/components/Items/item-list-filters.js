@@ -164,12 +164,8 @@ export const ListFilters = (props) => {
       // First cleanup the previous filter items
       const newFilterItems = prevState.filter((filterItem) => filterItem.field !== 'foodbank');
       const latestValue = values[values.length - 1];
-      console.log(latestValue)
 
-      if (latestValue !== 'undefined'){
-        console.log('here, not undefined');
-        console.log(latestValue)
-        console.log(foodbankOptions.filter((option) => option.value === latestValue)[0].label)
+      if (typeof latestValue !== 'undefined'){
         newFilterItems.push({
           label: 'Foodbank',
           field: 'foodbank',
@@ -180,7 +176,6 @@ export const ListFilters = (props) => {
       return newFilterItems;
     });
   };
-  
 
   const stockValues = useMemo(() => {
     const values = filterItems
