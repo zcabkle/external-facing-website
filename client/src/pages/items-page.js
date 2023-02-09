@@ -78,6 +78,7 @@ const ItemsPage = () => {
     }*/
 
     // Present only if filter required
+    console.log(filters.inStock)
     if (typeof filters.inStock !== 'undefined') {
 
       var stockMatched = false;
@@ -95,7 +96,8 @@ const ItemsPage = () => {
       }
     }
 
-   if (typeof filters.foodbank !== 'undefined') {
+    console.log(filters.foodbank)
+    if (typeof filters.foodbank !== 'undefined') {
 
       var foodbankMatched = false;
 

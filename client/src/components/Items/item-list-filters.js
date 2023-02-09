@@ -165,7 +165,7 @@ export const ListFilters = (props) => {
       const newFilterItems = prevState.filter((filterItem) => filterItem.field !== 'foodbank');
       const latestValue = values[values.length - 1];
 
-      if (typeof latestValue !== 'undefined'){
+      if (typeof latestValue !== 'undefined' && latestValue !== 'all'){
         newFilterItems.push({
           label: 'Foodbank',
           field: 'foodbank',
