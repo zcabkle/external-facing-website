@@ -93,8 +93,17 @@ app.get('/items/:id', async (req, res) => {
 
     var response = await makeRequest(bearerToken, url);
     var json_content = await response.json();
-    console.log(json_content)
-    res.json({ "items": json_content });
+    console.log(json_content);
+
+    var url = 'https://org6e7090ee.api.crm4.dynamics.com/api/data/v9.2/cr967_foodbanks?$select=cr967_name,cr967_foodbankid';
+
+    var bearerToken = await getToken();
+
+    var response = await makeRequest(bearerToken, url);
+    var json_content2 = await response.json();
+    console.log(json_content2)
+
+    res.json({ "items": json_content, 'foodbank_names':json_content2 });
 })
 
 app.get('/parcels/:id', async (req, res) => {
