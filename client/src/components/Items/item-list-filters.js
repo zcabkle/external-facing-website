@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Chip, Divider, Input, Typography } from '@mui/material';
 import { useUpdateEffect } from '../../hooks/use-update-effect';
@@ -25,31 +25,9 @@ const stockOptions = [
 ];
 
 export const ListFilters = (props) => {
-  const { onChange, ...other } = props;
+  const { onChange, foodbankOptions, ...other } = props;
   const [queryValue, setQueryValue] = useState('');
   const [filterItems, setFilterItems] = useState([]);
-  const [foodbanks, setFoodbanks] = useState([]);
-
-  useEffect(() => {
-    fetch("http://localhost:8080/getFoodbanks")
-      .then(res => res.json())
-      .then(
-        res => {
-          setFoodbanks(res.foodbank_names.value)
-        }
-      )
-  }, []);
-
-  var foodbank_tags = foodbanks.map(foodbank => {
-    const container = {};
-
-    container['label'] = foodbank.cr967_name;
-    container['value'] = foodbank.cr967_foodbankid;
-
-    return container;
-  })
-
-  const foodbankOptions = [{label:'All', value:'all'}].concat(foodbank_tags);
 
   useUpdateEffect(() => {
     const filters = {
@@ -176,11 +154,50 @@ export const ListFilters = (props) => {
       return newFilterItems;
     });
   };
+
+  const handleFoodbankChange = (values) => {
+    // Stock can only have one value, even if displayed as multi-select, so we select the first one.
+    // This example allows you to select one value or "All", which is not included in the
+    // rest of multi-selects.
+
+    setFilterItems((prevState) => {
+      // First cleanup the previous filter items
+      const newFilterItems = prevState.filter((filterItem) => filterItem.field !== 'foodbank');
+      const latestValue = values[values.length - 1];
+      console.log(latestValue)
+
+      if (latestValue !== 'undefined'){
+        console.log('here, not undefined');
+        console.log(latestValue)
+        console.log(foodbankOptions.filter((option) => option.value === latestValue)[0].label)
+        newFilterItems.push({
+          label: 'Foodbank',
+          field: 'foodbank',
+          value: latestValue,
+          displayValue: foodbankOptions.filter((option) => option.value === latestValue)[0].label
+        });
+      }
+      return newFilterItems;
+    });
+  };
   
 
   const stockValues = useMemo(() => {
     const values = filterItems
       .filter((filterItems) => filterItems.field === 'inStock')
+      .map((filterItems) => filterItems.value);
+
+    // Since we do not display the "all" as chip, we add it to the multi-select as a selected value
+    if (values.length === 0) {
+      values.unshift('all');
+    }
+
+    return values;
+  }, [filterItems]);
+
+  const foodbankValues = useMemo(() => {
+    const values = filterItems
+      .filter((filterItems) => filterItems.field === 'foodbank')
       .map((filterItems) => filterItems.value);
 
     // Since we do not display the "all" as chip, we add it to the multi-select as a selected value
@@ -282,6 +299,12 @@ export const ListFilters = (props) => {
           onChange={handleStockChange}
           options={stockOptions}
           value={stockValues}
+        />
+         <MultiSelect
+          label="Foodbanks"
+          onChange={handleFoodbankChange}
+          options={foodbankOptions}
+          value={foodbankValues}
         />
       </Box>
     </div>

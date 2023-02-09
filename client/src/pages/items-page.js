@@ -38,6 +38,17 @@ const ItemsPage = () => {
     }
   }, []);
 
+  var temp_foodbank_tags = foodbanks.map(foodbank => {
+    const container = {};
+
+    container['label'] = foodbank.cr967_name;
+    container['value'] = foodbank.cr967_foodbankid;
+
+    return container;
+  })
+
+  const foodbank_tags = [{label:'All', value:'all'}].concat(temp_foodbank_tags);
+
   const applyFilters = (products, filters) => products.filter((product) => {
     if (filters.name) {
       const nameMatched = product.cr967_name.toLowerCase().includes(filters.name.toLowerCase());
@@ -102,8 +113,6 @@ const ItemsPage = () => {
   const applyPagination = (products, page, rowsPerPage) => products.slice(page * rowsPerPage,
     page * rowsPerPage + rowsPerPage);
 
-  //const paginatedItems = applyPagination(items, page, rowsPerPage);
-
   const filteredProducts = applyFilters(items, filters);
   const paginatedItems = applyPagination(filteredProducts, page, rowsPerPage);
 
@@ -131,26 +140,30 @@ const ItemsPage = () => {
         </Box>
 
         {(loading || error) ? (
-          <Card><Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: "center",
-              minHeight: "10vh",
-              mt: 3
-            }}>
-            {error || <CircularProgress />}
-          </Box></Card>
+          <Card>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: "center",
+                minHeight: "10vh",
+                mt: 3
+              }}>
+              {error || <CircularProgress />}
+            </Box>
+          </Card>
         ) : (
-          <Card><ListFilters onChange={handleFiltersChange} />
+          <Card>
+            <ListFilters onChange={handleFiltersChange} foodbankOptions={foodbank_tags}/>
             <ItemListTable
               onPageChange={handlePageChange}
               onRowsPerPageChange={handleRowsPerPageChange}
               items={paginatedItems}
               itemsCount={items.length}
-              tags={foodbanks}
+              tags={foodbank_tags}
               page={page}
-              rowsPerPage={rowsPerPage} /></Card>)}
+              rowsPerPage={rowsPerPage} />
+            </Card>)}
       </Container>
     </Box>
   );

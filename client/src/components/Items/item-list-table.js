@@ -63,7 +63,6 @@ const ItemListTable = (props) => {
     setOpenProduct((prevValue) => (prevValue === productId ? null : productId));
   };
 
-
   return (
     <Card>
       <div>
@@ -251,7 +250,7 @@ const ItemListTable = (props) => {
                           color="textSecondary"
                           variant="body2"
                         >
-                          {tags.filter(tag => tag.cr967_foodbankid === item._cr967_foodbankkey_value)[0].cr967_name}
+                          {tags.filter(tag => tag.value === item._cr967_foodbankkey_value)[0].label}
                         </Typography>
                       </TableCell>
                     </TableRow>
