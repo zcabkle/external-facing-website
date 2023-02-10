@@ -55,6 +55,7 @@ const FoodbankParcelsListTable = (props) => {
     parcels,
     parcelsCount,
     rowsPerPage,
+    tags
   } = props;
   const [openProduct, setOpenProduct] = useState(null);
 
@@ -69,18 +70,12 @@ const FoodbankParcelsListTable = (props) => {
           <Table sx={{ minWidth: 1200 }}>
             <TableHead>
               <TableRow>
-                <TableCell />
+                <TableCell width='10%'/>
                 <TableCell width="25%">
                   Name
                 </TableCell>
-                <TableCell width="25%">
+                <TableCell width="45%">
                   Description
-                </TableCell>
-                <TableCell>
-                  Quantity
-                </TableCell>
-                <TableCell>
-                  Stock Level
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -173,77 +168,14 @@ const FoodbankParcelsListTable = (props) => {
                           </Box>
                         </Box>
                       </TableCell>
-                      <TableCell width="25%">
+                      <TableCell width="45%">
                         <Typography
                           color="textSecondary"
                           variant="body2"
                         >
-
                           {parcel.cr967_description ? <div style={{whiteSpace: 'pre-line'}}>{parcel.cr967_description}</div> : "No description given."}
-
                         </Typography>
                       </TableCell>
-                      <TableCell>
-                        <Typography
-                          color="textSecondary"
-                          variant="body2"
-                        >
-                          {parcel.cr967_sharequantitywith === 2 ?
-                            parcel.cr967_quantity : "Quantity not being shared."}
-                        </Typography>
-                      </TableCell>
-                      <TableCell>
-                        {parcel.cr967_sharestocklevelwith === 2 &&
-                          <Box>
-                            <SeverityPill color={
-                              (() => {
-                                if (parcel.cr967_stocklevel === 0) {
-                                  return (
-                                    'error'
-                                  )
-                                } else if (parcel.cr967_stocklevel === 1) {
-                                  return (
-                                    'info'
-                                  )
-                                } else {
-                                  return (
-                                    'success'
-                                  )
-                                }
-                              })()
-                            }>
-                              {
-                                (() => {
-                                  if (parcel.cr967_stocklevel === 0) {
-                                    return (
-                                      "UNDERSTOCKED"
-                                    )
-                                  } else if (parcel.cr967_stocklevel === 1) {
-                                    return (
-                                      "NEITHER"
-                                    )
-                                  } else {
-                                    return (
-                                      "OVERSTOCKED"
-                                    )
-                                  }
-                                })()
-                              }
-                            </SeverityPill>
-                            <Typography
-                              color="textSecondary"
-                              variant="body2"
-                            >
-                              {parcel.cr967_stocklevel === 0 && "Donations requested!"}
-                            </Typography></Box>}
-                        {
-                          parcel.cr967_sharestocklevelwith !== 2 && <Typography
-                            color="textSecondary"
-                            variant="body2"
-                          > Stock level not being shared.</Typography>
-                        }
-                      </TableCell>
-
                     </TableRow>
                     {open && (
                       <TableRow>

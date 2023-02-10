@@ -12,6 +12,7 @@ const FoodbankParcelsPage = () => {
   const [error, setError] = useState('');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [foodbanks, setFoodbanks] = useState([]);
 
   const guid = window.location.href.split("/").pop()
 
@@ -19,13 +20,27 @@ const FoodbankParcelsPage = () => {
     try {
       fetch("http://localhost:8080/parcels/".concat(guid))
         .then(res => res.json())
-        .then(res => setParcels(res.parcels.value))
+        .then(res => {
+          setParcels(res.parcels.value)
+          setFoodbanks(res.foodbank_names.value)
+        })
         .then(() => setLoading(false));
     } catch (e) {
       setLoading(false);
       setError(e.message);
     }
   }, []);
+
+  var temp_foodbank_tags = foodbanks.map(foodbank => {
+    const container = {};
+
+    container['label'] = foodbank.cr967_name;
+    container['value'] = foodbank.cr967_foodbankid;
+
+    return container;
+  })
+
+  const foodbank_tags = [{label:'All', value:'all'}].concat(temp_foodbank_tags);
 
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
@@ -39,6 +54,8 @@ const FoodbankParcelsPage = () => {
     page * rowsPerPage + rowsPerPage);
 
   const paginatedItems = applyPagination(parcels, page, rowsPerPage);
+
+  const foodbankName = foodbanks?.filter((foodbank) => foodbank.cr967_foodbankid === guid)[0]?.cr967_name
 
   return (
     <Box
@@ -57,7 +74,7 @@ const FoodbankParcelsPage = () => {
           >
             <Grid item>
               <Typography variant="h4">
-                Parcels at foodbank X
+                Parcels at {foodbankName}
               </Typography>
             </Grid>
           </Grid>
@@ -82,7 +99,8 @@ const FoodbankParcelsPage = () => {
               parcels={paginatedItems}
               parcelsCount={parcels.length}
               page={page}
-              rowsPerPage={rowsPerPage} /></Card>)}
+              rowsPerPage={rowsPerPage}
+              tags={foodbank_tags} /></Card>)}
       </Container>
     </Box>
   );
