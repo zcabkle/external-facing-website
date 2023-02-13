@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment } from 'react';
 import {
   Box,
   Card,
@@ -9,42 +9,11 @@ import {
   TableHead,
   TableRow,
   Typography,
-  TablePagination,
-  Grid,
-  Divider,
-  TextField,
-  CardContent
+  TablePagination
 } from '@mui/material';
 import { ChevronRight as ChevronRightIcon } from '../../icons/chevron-right';
-import { ChevronDown as ChevronDownIcon } from '../../icons/chevron-down';
 import { Image as ImageIcon } from '../../icons/image';
 import { Scrollbar } from '../scrollbar';
-import { SeverityPill } from '../severity-pill';
-
-const getCategory = (n) => {
-  switch (n) {
-    case 0:
-      return "Fresh/Fruit/Veg";
-    case 1:
-      return "Dairy";
-    case 2:
-      return "Toiletries";
-    case 3:
-      return "Cereal";
-    case 4:
-      return "Canned";
-    case 5:
-      return "Meat";
-    case 6:
-      return "Bread";
-    case 7:
-      return "Miscellaneous";
-    case 8:
-      return "Dry Food/Long Life";
-    default:
-      return "HERE";
-  }
-}
 
 const FoodbankParcelsListTable = (props) => {
 
@@ -55,13 +24,7 @@ const FoodbankParcelsListTable = (props) => {
     parcels,
     parcelsCount,
     rowsPerPage,
-    tags
   } = props;
-  const [openProduct, setOpenProduct] = useState(null);
-
-  const handleOpenProduct = (productId) => {
-    setOpenProduct((prevValue) => (prevValue === productId ? null : productId));
-  };
 
   return (
     <Card>
@@ -104,7 +67,7 @@ const FoodbankParcelsListTable = (props) => {
                         }}
                         width="25%"
                       >
-                        <IconButton onClick={() => handleOpenProduct(parcel.cr967_parcelpk)} disabled>
+                        <IconButton >
                           <ChevronRightIcon fontSize="small" />
                         </IconButton>
                       </TableCell>

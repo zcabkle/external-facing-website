@@ -1,62 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Chip, Divider, Input, Typography } from '@mui/material';
 import { useUpdateEffect } from '../../hooks/use-update-effect';
 import { Search as SearchIcon } from '../../icons/search';
-import { MultiSelect } from '../multi-select';
-
-const categoryOptions = [
-  {
-    label: 'Healthcare',
-    value: 'healthcare'
-  },
-  {
-    label: 'Makeup',
-    value: 'makeup'
-  },
-  {
-    label: 'Dress',
-    value: 'dress'
-  },
-  {
-    label: 'Skincare',
-    value: 'skincare'
-  },
-  {
-    label: 'Jewelry',
-    value: 'jewelry'
-  },
-  {
-    label: 'Blouse',
-    value: 'blouse'
-  }
-];
-
-const statusOptions = [
-  {
-    label: 'Published',
-    value: 'published'
-  },
-  {
-    label: 'Draft',
-    value: 'draft'
-  }
-];
-
-const stockOptions = [
-  {
-    label: 'Understocked',
-    value: 'understocked'
-  },
-  {
-    label: 'Neither',
-    value: 'neither'
-  },
-  {
-    label: 'Overstocked',
-    value: 'overstocked'
-  }
-];
 
 export const ListFilters = (props) => {
   const { onChange, ...other } = props;

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Chip, Divider, Input, Typography } from '@mui/material';
 import { useUpdateEffect } from '../../hooks/use-update-effect';

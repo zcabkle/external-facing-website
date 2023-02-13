@@ -32,7 +32,7 @@ const FoodbankParcelsPage = () => {
       setLoading(false);
       setError(e.message);
     }
-  }, []);
+  }, [guid]);
 
   var temp_foodbank_tags = foodbanks.map(foodbank => {
     const container = {};
