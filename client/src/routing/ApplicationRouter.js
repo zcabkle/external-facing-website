@@ -5,7 +5,7 @@ import FoodbanksPage from "../pages/foodbanks-page/foodbanks-page";
 import FoodbankItemsPage from "../pages/foodbank-items-page/foodbank-items-page";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import FoodbankParcelsPage from "../pages/foodbank-parcels-page/foodbank-parcels-page";
-import Navbar from './Navbar';
+import Navbar from '../components/Navbar/Navbar';
 
 function ApplicationRouter() {
     return (

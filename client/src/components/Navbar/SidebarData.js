@@ -17,7 +17,7 @@ export const SidebarData = [
     cName: 'nav-text'
   },
   {
-    title: 'Foodbanks',
+    title: 'Foodbank Branches',
     path: '/foodbanks',
     icon: <FaIcons.FaCartPlus />,
     cName: 'nav-text'
