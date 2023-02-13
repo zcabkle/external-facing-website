@@ -1,33 +1,37 @@
-import React, { useState, useEffect } from "react"
-import FoodbankItemsListTable from "../components/Foodbank Items/foodbank-item-list-table";
-import { ListFilters } from "../components/Foodbank Items/foodbank-item-list-filters";
 import {
   Box, Container, Grid, Typography, Card, CircularProgress,
 } from '@mui/material';
+import { useState } from 'react';
+import ItemListTable from '../../components/Items/item-list-table';
+import { ListFilters } from '../../components/Items/item-list-filters';
+import { useEffect } from 'react';
 
+const ItemsPage = () => {
 
-const FoodbankItemsPage = () => {
-  const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [items, setItems] = useState([]);
   const [foodbanks, setFoodbanks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const [filters, setFilters] = useState({
     name: undefined,
-    inStock: undefined
+    category: [],
+    status: [],
+    inStock: undefined,
+    foodbank: undefined,
   });
-
-  const guid = window.location.href.split("/").pop()
 
   useEffect(() => {
     try {
-      fetch("http://localhost:8080/items/".concat(guid))
+      fetch("http://localhost:8080/items")
         .then(res => res.json())
-        .then(res => {
-          setItems(res.items.value);
-          setFoodbanks(res.foodbank_names.value);
-        })
+        .then(
+          res => {
+            setItems(res.items.value);
+            setFoodbanks(res.foodbank_names.value)
+          }
+        )
         .then(() => setLoading(false))
     } catch (e) {
       setLoading(false);
@@ -55,6 +59,7 @@ const FoodbankItemsPage = () => {
       }
     }
 
+    // Present only if filter required
     if (typeof filters.inStock !== 'undefined') {
 
       var stockMatched = false;
@@ -68,6 +73,19 @@ const FoodbankItemsPage = () => {
       }
 
       if (!stockMatched) {
+        return false;
+      }
+    }
+
+    if (typeof filters.foodbank !== 'undefined') {
+
+      var foodbankMatched = false;
+
+      if (filters.foodbank === product._cr967_foodbankkey_value) {
+        foodbankMatched = true
+      }
+
+      if (!foodbankMatched) {
         return false;
       }
     }
@@ -90,11 +108,8 @@ const FoodbankItemsPage = () => {
   const applyPagination = (products, page, rowsPerPage) => products.slice(page * rowsPerPage,
     page * rowsPerPage + rowsPerPage);
 
-  const filteredItems = applyFilters(items, filters);
-  const paginatedItems = applyPagination(filteredItems, page, rowsPerPage);
-
-  const foodbankName = foodbanks?.filter((foodbank) => foodbank.cr967_foodbankid === guid)[0]?.cr967_name
-  console.log(foodbankName)
+  const filteredProducts = applyFilters(items, filters);
+  const paginatedItems = applyPagination(filteredProducts, page, rowsPerPage);
 
   return (
     <Box
@@ -113,7 +128,7 @@ const FoodbankItemsPage = () => {
           >
             <Grid item>
               <Typography variant="h4">
-                {foodbankName && 'Items at ' + foodbankName}
+                Items
               </Typography>
             </Grid>
           </Grid>
@@ -135,17 +150,18 @@ const FoodbankItemsPage = () => {
         ) : (
           <Card>
             <ListFilters onChange={handleFiltersChange} foodbankOptions={foodbank_tags}/>
-            <FoodbankItemsListTable
+            <ItemListTable
               onPageChange={handlePageChange}
               onRowsPerPageChange={handleRowsPerPageChange}
               items={paginatedItems}
               itemsCount={items.length}
+              tags={foodbank_tags}
               page={page}
               rowsPerPage={rowsPerPage} />
-          </Card>)}
+            </Card>)}
       </Container>
     </Box>
   );
 };
 
-export default FoodbankItemsPage;
+export default ItemsPage;

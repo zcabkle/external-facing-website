@@ -1,10 +1,10 @@
 import React from "react";
 import LandingPage from "../pages/landing-page";
-import ItemsPage from "../pages/items-page.js";
-import FoodbanksPage from "../pages/foodbanks-page";
-import FoodbankItemsPage from "../pages/foodbank-items-page";
+import ItemsPage from "../pages/items-page/items-page.js";
+import FoodbanksPage from "../pages/foodbanks-page/foodbanks-page";
+import FoodbankItemsPage from "../pages/foodbank-items-page/foodbank-items-page";
 import { Routes, Route } from "react-router-dom";
-import FoodbankParcelsPage from "../pages/foodbank-parcels-page";
+import FoodbankParcelsPage from "../pages/foodbank-parcels-page/foodbank-parcels-page";
 
 function ApplicationRouter() {
     return (

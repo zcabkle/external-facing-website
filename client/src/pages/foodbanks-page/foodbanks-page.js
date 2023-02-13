@@ -1,46 +1,30 @@
-import FoodbankParcelsListTable from "../components/Foodbank Parcels/foodbank-parcel-list-table";
-import { ListFilters } from "../components/Foodbank Parcels/foodbank-parcel-list-filters";
 import {
   Box, Container, Grid, Typography, Card, CircularProgress,
 } from '@mui/material';
-import { useEffect } from 'react';
 import { useState } from 'react';
+import FoodbankListTable from '../../components/Foodbanks/foodbank-list-table';
+import { ListFilters } from '../../components/Foodbanks/foodbank-list-filters';
+import { useEffect } from 'react';
 
-const FoodbankParcelsPage = () => {
-  const [parcels, setParcels] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+const FoodbanksPage = () => {
+
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [foodbanks, setFoodbanks] = useState([]);
-
-  const guid = window.location.href.split("/").pop()
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     try {
-      fetch("http://localhost:8080/parcels/".concat(guid))
+      fetch("http://localhost:8080/foodbanks")
         .then(res => res.json())
-        .then(res => {
-          setParcels(res.parcels.value)
-          setFoodbanks(res.foodbank_names.value)
-        })
-        .then(() => setLoading(false));
+        .then(res => setFoodbanks(res.foodbanks.value))
+        .then(() => setLoading(false))
     } catch (e) {
       setLoading(false);
       setError(e.message);
     }
   }, []);
-
-  var temp_foodbank_tags = foodbanks.map(foodbank => {
-    const container = {};
-
-    container['label'] = foodbank.cr967_name;
-    container['value'] = foodbank.cr967_foodbankid;
-
-    return container;
-  })
-
-  const foodbank_tags = [{label:'All', value:'all'}].concat(temp_foodbank_tags);
 
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
@@ -53,9 +37,7 @@ const FoodbankParcelsPage = () => {
   const applyPagination = (products, page, rowsPerPage) => products.slice(page * rowsPerPage,
     page * rowsPerPage + rowsPerPage);
 
-  const paginatedItems = applyPagination(parcels, page, rowsPerPage);
-
-  const foodbankName = foodbanks?.filter((foodbank) => foodbank.cr967_foodbankid === guid)[0]?.cr967_name
+  const paginatedItems = applyPagination(foodbanks, page, rowsPerPage);
 
   return (
     <Box
@@ -74,7 +56,7 @@ const FoodbankParcelsPage = () => {
           >
             <Grid item>
               <Typography variant="h4">
-                Parcels at {foodbankName}
+                Foodbanks
               </Typography>
             </Grid>
           </Grid>
@@ -93,17 +75,16 @@ const FoodbankParcelsPage = () => {
           </Box></Card>
         ) : (
           <Card><ListFilters />
-            <FoodbankParcelsListTable
+            <FoodbankListTable
               onPageChange={handlePageChange}
               onRowsPerPageChange={handleRowsPerPageChange}
-              parcels={paginatedItems}
-              parcelsCount={parcels.length}
+              foodbanks={paginatedItems}
+              foodbanksCount={foodbanks.length}
               page={page}
-              rowsPerPage={rowsPerPage}
-              tags={foodbank_tags} /></Card>)}
+              rowsPerPage={rowsPerPage} /></Card>)}
       </Container>
     </Box>
   );
 };
 
-export default FoodbankParcelsPage;
+export default FoodbanksPage;
