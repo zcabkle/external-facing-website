@@ -13,6 +13,9 @@ const FoodbanksPage = () => {
   const [foodbanks, setFoodbanks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [filters, setFilters] = useState({
+    name: undefined,
+  });
 
   useEffect(() => {
     try {
@@ -26,6 +29,22 @@ const FoodbanksPage = () => {
     }
   }, []);
 
+  const applyFilters = (products, filters) => products.filter((product) => {
+    if (filters.name) {
+      const nameMatched = product.cr967_name.toLowerCase().includes(filters.name.toLowerCase());
+
+      if (!nameMatched) {
+        return false;
+      }
+    }    
+
+    return true;
+  });
+
+  const handleFiltersChange = (filters) => {
+    setFilters(filters);
+  };
+
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
   };
@@ -37,7 +56,9 @@ const FoodbanksPage = () => {
   const applyPagination = (products, page, rowsPerPage) => products.slice(page * rowsPerPage,
     page * rowsPerPage + rowsPerPage);
 
-  const paginatedItems = applyPagination(foodbanks, page, rowsPerPage);
+
+  const filteredFoodbanks = applyFilters(foodbanks, filters);
+  const paginatedFoodbanks = applyPagination(filteredFoodbanks, page, rowsPerPage);
 
   return (
     <Box
@@ -74,12 +95,12 @@ const FoodbanksPage = () => {
             {error || <CircularProgress />}
           </Box></Card>
         ) : (
-          <Card><ListFilters />
+          <Card><ListFilters onChange={handleFiltersChange}/>
             <FoodbankListTable
               onPageChange={handlePageChange}
               onRowsPerPageChange={handleRowsPerPageChange}
-              foodbanks={paginatedItems}
-              foodbanksCount={foodbanks.length}
+              foodbanks={paginatedFoodbanks}
+              foodbanksCount={filteredFoodbanks.length}
               page={page}
               rowsPerPage={rowsPerPage} /></Card>)}
       </Container>

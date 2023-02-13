@@ -70,7 +70,7 @@ const FoodbankParcelsListTable = (props) => {
           <Table sx={{ minWidth: 1200 }}>
             <TableHead>
               <TableRow>
-                <TableCell width='10%'/>
+                <TableCell width='10%' />
                 <TableCell width="25%">
                   Name
                 </TableCell>
@@ -82,10 +82,8 @@ const FoodbankParcelsListTable = (props) => {
 
             <TableBody>
               {parcels.map((parcel) => {
-                const open = parcel.cr967_parcelpk === openProduct;
-
                 return (
-                  <Fragment key={parcel.cr967_parcelpk }>
+                  <Fragment key={parcel.cr967_parcelpk}>
                     <TableRow
                       hover
                       key={parcel.cr967_parcelpk}
@@ -93,25 +91,21 @@ const FoodbankParcelsListTable = (props) => {
                       <TableCell
                         padding="checkbox"
                         sx={{
-                          ...(open && {
-                            position: 'relative',
-                            '&:after': {
-                              position: 'absolute',
-                              content: '" "',
-                              top: 0,
-                              left: 0,
-                              backgroundColor: 'primary.main',
-                              width: 3,
-                              height: 'calc(100% + 1px)'
-                            }
-                          })
+                          position: 'relative',
+                          '&:after': {
+                            position: 'absolute',
+                            content: '" "',
+                            top: 0,
+                            left: 0,
+                            backgroundColor: 'primary.main',
+                            width: 3,
+                            height: 'calc(100% + 1px)'
+                          }
                         }}
                         width="25%"
                       >
-                        <IconButton onClick={() => handleOpenProduct(parcel.cr967_parcelpk)}>
-                          {open
-                            ? <ChevronDownIcon fontSize="small" />
-                            : <ChevronRightIcon fontSize="small" />}
+                        <IconButton onClick={() => handleOpenProduct(parcel.cr967_parcelpk)} disabled>
+                          <ChevronRightIcon fontSize="small" />
                         </IconButton>
                       </TableCell>
                       <TableCell width="25%">
@@ -173,195 +167,10 @@ const FoodbankParcelsListTable = (props) => {
                           color="textSecondary"
                           variant="body2"
                         >
-                          {parcel.cr967_description ? <div style={{whiteSpace: 'pre-line'}}>{parcel.cr967_description}</div> : "No description given."}
+                          {parcel.cr967_description ? <div style={{ whiteSpace: 'pre-line' }}>{parcel.cr967_description}</div> : "No description given."}
                         </Typography>
                       </TableCell>
                     </TableRow>
-                    {open && (
-                      <TableRow>
-                        <TableCell
-                          colSpan={7}
-                          sx={{
-                            p: 0,
-                            position: 'relative',
-                            '&:after': {
-                              position: 'absolute',
-                              content: '" "',
-                              top: 0,
-                              left: 0,
-                              backgroundColor: 'primary.main',
-                              width: 3,
-                              height: 'calc(100% + 1px)'
-                            }
-                          }}
-                        >
-                          <CardContent>
-                            <Grid
-                              container
-                              spacing={3}
-                            >
-                              <Grid
-                                item
-                                md={6}
-                                xs={12}
-                              >
-                                <Typography variant="h6">
-                                  Details
-                                </Typography>
-                                <Divider sx={{ my: 2 }} />
-                                <Grid
-                                  container
-                                  spacing={3}
-                                >
-                                  <Grid
-                                    item
-                                    md={6}
-                                    xs={12}
-                                  >
-                                    <TextField
-                                      defaultValue={parcel.cr967_name}
-                                      fullWidth
-                                      label="Name"
-                                      name="name"
-                                      InputProps={{
-                                        readOnly: true,
-                                      }}
-                                    />
-                                  </Grid>
-                                  <Grid
-                                    item
-                                    md={6}
-                                    xs={12}
-                                  >
-                                    <TextField
-                                      defaultValue={parcel.cr967_description ? parcel.cr967_description : "No description given."}
-                                      fullWidth
-                                      label="Description"
-                                      name="description"
-                                      InputProps={{
-                                        readOnly: true,
-                                      }}
-                                    />
-                                  </Grid>
-                                  <Grid
-                                    item
-                                    md={6}
-                                    xs={12}
-                                  >
-                                    <TextField
-                                      defaultValue={getCategory(parcel.cr967_itemcategory)}
-                                      fullWidth
-                                      label="Item Category"
-                                      name="category"
-                                      InputProps={{
-                                        readOnly: true,
-                                      }}
-                                    />
-
-                                  </Grid>
-                                  <Grid
-                                    item
-                                    md={6}
-                                    xs={12}
-                                  >
-                                    <TextField
-                                      defaultValue={"Link to the stock at this foodbank"}
-                                      disabled
-                                      fullWidth
-                                      label="Foodbank"
-                                      name="foodbank"
-                                    />
-                                  </Grid>
-                                </Grid>
-                              </Grid>
-                              <Grid
-                                item
-                                md={6}
-                                xs={12}
-                              >
-                                <Typography variant="h6">
-                                  &nbsp;
-                                </Typography>
-                                <Divider sx={{ my: 2 }} />
-                                <Grid
-                                  container
-                                  spacing={3}
-                                >
-                                  <Grid
-                                    item
-                                    md={6}
-                                    xs={12}
-                                  >
-                                    <TextField
-                                      defaultValue={parcel.cr967_quantity}
-                                      fullWidth
-                                      InputProps={{
-                                        readOnly: true,
-                                      }}
-                                      label="Quantity"
-                                      name="quantity"
-                                      type="number"
-                                    />
-                                  </Grid>
-                                  <Grid
-                                    item
-                                    md={6}
-                                    xs={12}
-                                  >
-                                    <TextField
-                                      defaultValue={
-                                        (() => {
-                                          if (parcel.cr967_stocklevel === 0) {
-                                            return (
-                                              "Understocked"
-                                            )
-                                          } else if (parcel.cr967_stocklevel === 1) {
-                                            return (
-                                              "Neither"
-                                            )
-                                          } else {
-                                            return (
-                                              "Overstocked"
-                                            )
-                                          }
-                                        })()
-                                      }
-                                      fullWidth
-                                      label="Stock level"
-                                      name="stock-level"
-                                      InputProps={{
-                                        readOnly: true,
-                                      }}
-                                    />
-                                  </Grid>
-                                  <Grid
-                                    item
-                                    md={6}
-                                    xs={12}
-                                    sx={{
-                                      alignItems: 'center',
-                                      display: 'flex'
-                                    }}
-                                  >
-                          
-                                  </Grid>
-                                </Grid>
-                              </Grid>
-                            </Grid>
-                          </CardContent>
-                          <Divider />
-                          <Box
-                            sx={{
-                              display: 'flex',
-                              flexWrap: 'wrap',
-                              px: 2,
-                              py: 1
-                            }}
-                          >
-                          </Box>
-                        </TableCell>
-                      </TableRow>
-                    )}
                   </Fragment>
                 );
               })}

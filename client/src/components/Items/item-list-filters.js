@@ -15,8 +15,8 @@ const stockOptions = [
     value: 'understocked'
   },
   {
-    label: 'Neither',
-    value: 'neither'
+    label: 'Normal',
+    value: 'normal'
   },
   {
     label: 'Overstocked',
@@ -132,12 +132,12 @@ export const ListFilters = (props) => {
             displayValue: 'Overstocked'
           });
           break;
-        case 'neither':
+        case 'normal':
           newFilterItems.push({
             label: 'Stock',
             field: 'inStock',
-            value: 'neither',
-            displayValue: 'Neither'
+            value: 'normal',
+            displayValue: 'Normal'
           });
           break;
         default:
@@ -290,7 +290,7 @@ export const ListFilters = (props) => {
           value={stockValues}
         />
          <MultiSelect
-          label="Foodbanks"
+          label="Foodbank"
           onChange={handleFoodbankChange}
           options={foodbankOptions}
           value={foodbankValues}

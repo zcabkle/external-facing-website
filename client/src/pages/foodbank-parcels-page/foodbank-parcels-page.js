@@ -13,6 +13,9 @@ const FoodbankParcelsPage = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [foodbanks, setFoodbanks] = useState([]);
+  const [filters, setFilters] = useState({
+    name: undefined,
+  });
 
   const guid = window.location.href.split("/").pop()
 
@@ -42,6 +45,22 @@ const FoodbankParcelsPage = () => {
 
   const foodbank_tags = [{label:'All', value:'all'}].concat(temp_foodbank_tags);
 
+  const applyFilters = (products, filters) => products.filter((product) => {
+    if (filters.name) {
+      const nameMatched = product.cr967_name.toLowerCase().includes(filters.name.toLowerCase()) || product.cr967_description.toLowerCase().includes(filters.name.toLowerCase());
+
+      if (!nameMatched) {
+        return false;
+      }
+    }    
+
+    return true;
+  });
+
+  const handleFiltersChange = (filters) => {
+    setFilters(filters);
+  };
+
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
   };
@@ -53,7 +72,8 @@ const FoodbankParcelsPage = () => {
   const applyPagination = (products, page, rowsPerPage) => products.slice(page * rowsPerPage,
     page * rowsPerPage + rowsPerPage);
 
-  const paginatedItems = applyPagination(parcels, page, rowsPerPage);
+  const filteredParcels = applyFilters(parcels, filters);
+  const paginatedParcels = applyPagination(filteredParcels, page, rowsPerPage);
 
   const foodbankName = foodbanks?.filter((foodbank) => foodbank.cr967_foodbankid === guid)[0]?.cr967_name
 
@@ -92,12 +112,12 @@ const FoodbankParcelsPage = () => {
             {error || <CircularProgress />}
           </Box></Card>
         ) : (
-          <Card><ListFilters />
+          <Card><ListFilters onChange={handleFiltersChange}/>
             <FoodbankParcelsListTable
               onPageChange={handlePageChange}
               onRowsPerPageChange={handleRowsPerPageChange}
-              parcels={paginatedItems}
-              parcelsCount={parcels.length}
+              parcels={paginatedParcels}
+              parcelsCount={filteredParcels.length}
               page={page}
               rowsPerPage={rowsPerPage}
               tags={foodbank_tags} /></Card>)}

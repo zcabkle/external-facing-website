@@ -3,26 +3,6 @@ import PropTypes from 'prop-types';
 import { Box, Chip, Divider, Input, Typography } from '@mui/material';
 import { useUpdateEffect } from '../../hooks/use-update-effect';
 import { Search as SearchIcon } from '../../icons/search';
-import { MultiSelect } from '../multi-select';
-
-const stockOptions = [
-  {
-    label: 'All',
-    value: 'all'
-  },
-  {
-    label: 'Understocked',
-    value: 'understocked'
-  },
-  {
-    label: 'Neither',
-    value: 'neither'
-  },
-  {
-    label: 'Overstocked',
-    value: 'overstocked'
-  },
-];
 
 export const ListFilters = (props) => {
   const { onChange, ...other } = props;
@@ -32,9 +12,6 @@ export const ListFilters = (props) => {
   useUpdateEffect(() => {
       const filters = {
         name: undefined,
-        category: [],
-        status: [],
-        inStock: undefined
       };
 
       // Transform the filter items in an object that can be used by the parent component to call the
@@ -45,16 +22,6 @@ export const ListFilters = (props) => {
             // There will (or should) be only one filter item with field "name"
             // so we can set up it directly
             filters.name = filterItem.value;
-            break;
-          case 'category':
-            filters.category.push(filterItem.value);
-            break;
-          case 'status':
-            filters.status.push(filterItem.value);
-            break;
-          case 'inStock':
-            // The value can be "available" or "outOfStock" and we transform it to a boolean
-            filters.inStock = filterItem.value;
             break;
           default:
             break;
@@ -108,63 +75,6 @@ export const ListFilters = (props) => {
     }
   };
 
-  const handleStockChange = (values) => {
-    // Stock can only have one value, even if displayed as multi-select, so we select the first one.
-    // This example allows you to select one value or "All", which is not included in the
-    // rest of multi-selects.
-
-    setFilterItems((prevState) => {
-      // First cleanup the previous filter items
-      const newFilterItems = prevState.filter((filterItem) => filterItem.field !== 'inStock');
-      const latestValue = values[values.length - 1];
-
-      switch (latestValue) {
-        case 'understocked':
-          newFilterItems.push({
-            label: 'Stock',
-            field: 'inStock',
-            value: 'understocked',
-            displayValue: 'Understocked'
-          });
-          break;
-        case 'overstocked':
-          newFilterItems.push({
-            label: 'Stock',
-            field: 'inStock',
-            value: 'overstocked',
-            displayValue: 'Overstocked'
-          });
-          break;
-        case 'neither':
-            newFilterItems.push({
-              label: 'Stock',
-              field: 'inStock',
-              value: 'neither',
-              displayValue: 'Neither'
-            });
-            break;
-        default:
-          // Should be "all", so we do not add this filter
-          break;
-      }
-
-      return newFilterItems;
-    });
-  };
-
-  const stockValues = useMemo(() => {
-    const values = filterItems
-      .filter((filterItems) => filterItems.field === 'inStock')
-      .map((filterItems) => filterItems.value);
-
-    // Since we do not display the "all" as chip, we add it to the multi-select as a selected value
-    if (values.length === 0) {
-      values.unshift('all');
-    }
-
-    return values;
-  }, [filterItems]);
-
   return (
     <div {...other}>
       <Box
@@ -186,7 +96,7 @@ export const ListFilters = (props) => {
             fullWidth
             onChange={handleQueryChange}
             onKeyUp={handleQueryKeyup}
-            placeholder="Search by product name"
+            placeholder="Filter by foodbank name"
             value={queryValue}
           />
         </Box>
@@ -251,12 +161,6 @@ export const ListFilters = (props) => {
           p: 1
         }}
       >
-        <MultiSelect
-          label="Stock"
-          onChange={handleStockChange}
-          options={stockOptions}
-          value={stockValues}
-        />
       </Box>
     </div>
   );

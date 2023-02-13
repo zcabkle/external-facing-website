@@ -219,7 +219,7 @@ const FoodbankItemsListTable = (props) => {
                                     )
                                   } else if (item.cr967_stocklevel === 1) {
                                     return (
-                                      "NEITHER"
+                                      "NORMAL"
                                     )
                                   } else {
                                     return (
@@ -384,7 +384,7 @@ const FoodbankItemsListTable = (props) => {
                                             )
                                           } else if (item.cr967_stocklevel === 1) {
                                             return (
-                                              "Neither"
+                                              "Normal"
                                             )
                                           } else {
                                             return (

@@ -66,9 +66,6 @@ export const ListFilters = (props) => {
   useUpdateEffect(() => {
       const filters = {
         name: undefined,
-        category: [],
-        status: [],
-        inStock: undefined
       };
 
       // Transform the filter items in an object that can be used by the parent component to call the
@@ -76,19 +73,7 @@ export const ListFilters = (props) => {
       filterItems.forEach((filterItem) => {
         switch (filterItem.field) {
           case 'name':
-            // There will (or should) be only one filter item with field "name"
-            // so we can set up it directly
             filters.name = filterItem.value;
-            break;
-          case 'category':
-            filters.category.push(filterItem.value);
-            break;
-          case 'status':
-            filters.status.push(filterItem.value);
-            break;
-          case 'inStock':
-            // The value can be "available" or "outOfStock" and we transform it to a boolean
-            filters.inStock = filterItem.value === 'available';
             break;
           default:
             break;
@@ -142,146 +127,6 @@ export const ListFilters = (props) => {
     }
   };
 
-  const handleCategoryChange = (values) => {
-    setFilterItems((prevState) => {
-      const valuesFound = [];
-
-      // First cleanup the previous filter items
-      const newFilterItems = prevState.filter((filterItem) => {
-        if (filterItem.field !== 'category') {
-          return true;
-        }
-
-        const found = values.includes(filterItem.value);
-
-        if (found) {
-          valuesFound.push(filterItem.value);
-        }
-
-        return found;
-      });
-
-      // Nothing changed
-      if (values.length === valuesFound.length) {
-        return newFilterItems;
-      }
-
-      values.forEach((value) => {
-        if (!valuesFound.includes(value)) {
-          const option = categoryOptions.find((option) => option.value === value);
-
-          newFilterItems.push({
-            label: 'Category',
-            field: 'category',
-            value,
-            displayValue: option.label
-          });
-        }
-      });
-
-      return newFilterItems;
-    });
-  };
-
-  const handleStatusChange = (values) => {
-    setFilterItems((prevState) => {
-      const valuesFound = [];
-
-      // First cleanup the previous filter items
-      const newFilterItems = prevState.filter((filterItem) => {
-        if (filterItem.field !== 'status') {
-          return true;
-        }
-
-        const found = values.includes(filterItem.value);
-
-        if (found) {
-          valuesFound.push(filterItem.value);
-        }
-
-        return found;
-      });
-
-      // Nothing changed
-      if (values.length === valuesFound.length) {
-        return newFilterItems;
-      }
-
-      values.forEach((value) => {
-        if (!valuesFound.includes(value)) {
-          const option = statusOptions.find((option) => option.value === value);
-
-          newFilterItems.push({
-            label: 'Status',
-            field: 'status',
-            value,
-            displayValue: option.label
-          });
-        }
-      });
-
-      return newFilterItems;
-    });
-  };
-
-  const handleStockChange = (values) => {
-    // Stock can only have one value, even if displayed as multi-select, so we select the first one.
-    // This example allows you to select one value or "All", which is not included in the
-    // rest of multi-selects.
-
-    setFilterItems((prevState) => {
-      // First cleanup the previous filter items
-      const newFilterItems = prevState.filter((filterItem) => filterItem.field !== 'inStock');
-      const latestValue = values[values.length - 1];
-
-      switch (latestValue) {
-        case 'available':
-          newFilterItems.push({
-            label: 'Stock',
-            field: 'inStock',
-            value: 'available',
-            displayValue: 'Available'
-          });
-          break;
-        case 'outOfStock':
-          newFilterItems.push({
-            label: 'Stock',
-            field: 'inStock',
-            value: 'outOfStock',
-            displayValue: 'Out of Stock'
-          });
-          break;
-        default:
-          // Should be "all", so we do not add this filter
-          break;
-      }
-
-      return newFilterItems;
-    });
-  };
-
-  // We memoize this part to prevent re-render issues
-  const categoryValues = useMemo(() => filterItems
-    .filter((filterItems) => filterItems.field === 'category')
-    .map((filterItems) => filterItems.value), [filterItems]);
-
-  const statusValues = useMemo(() => filterItems
-    .filter((filterItems) => filterItems.field === 'status')
-    .map((filterItems) => filterItems.value), [filterItems]);
-
-  const stockValues = useMemo(() => {
-    const values = filterItems
-      .filter((filterItems) => filterItems.field === 'inStock')
-      .map((filterItems) => filterItems.value);
-
-    // Since we do not display the "all" as chip, we add it to the multi-select as a selected value
-    if (values.length === 0) {
-      values.unshift('all');
-    }
-
-    return values;
-  }, [filterItems]);
-
   return (
     <div {...other}>
       <Box
@@ -303,7 +148,7 @@ export const ListFilters = (props) => {
             fullWidth
             onChange={handleQueryChange}
             onKeyUp={handleQueryKeyup}
-            placeholder="Search by product name"
+            placeholder="Search for parcel"
             value={queryValue}
           />
         </Box>
@@ -368,24 +213,6 @@ export const ListFilters = (props) => {
           p: 1
         }}
       >
-        <MultiSelect
-          label="Category"
-          onChange={handleCategoryChange}
-          options={categoryOptions}
-          value={categoryValues}
-        />
-        <MultiSelect
-          label="Status"
-          onChange={handleStatusChange}
-          options={statusOptions}
-          value={statusValues}
-        />
-        <MultiSelect
-          label="Stock"
-          onChange={handleStockChange}
-          options={stockOptions}
-          value={stockValues}
-        />
       </Box>
     </div>
   );

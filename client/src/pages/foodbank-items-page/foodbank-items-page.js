@@ -61,7 +61,7 @@ const FoodbankItemsPage = () => {
 
       if (filters.inStock === 'understocked' && product.cr967_stocklevel === 0 && product.cr967_sharestocklevelwith === 2) {
         stockMatched = true
-      } else if (filters.inStock === 'neither' && product.cr967_stocklevel === 1 && product.cr967_sharestocklevelwith === 2) {
+      } else if (filters.inStock === 'normal' && product.cr967_stocklevel === 1 && product.cr967_sharestocklevelwith === 2) {
         stockMatched = true
       } else if (filters.inStock === 'overstocked' && product.cr967_stocklevel === 2 && product.cr967_sharestocklevelwith === 2) {
         stockMatched = true
@@ -139,7 +139,7 @@ const FoodbankItemsPage = () => {
               onPageChange={handlePageChange}
               onRowsPerPageChange={handleRowsPerPageChange}
               items={paginatedItems}
-              itemsCount={items.length}
+              itemsCount={filteredItems.length}
               page={page}
               rowsPerPage={rowsPerPage} />
           </Card>)}
