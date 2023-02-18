@@ -13,7 +13,8 @@ import {
   Grid,
   Divider,
   TextField,
-  CardContent
+  CardContent,
+  Link
 } from '@mui/material';
 import { ChevronRight as ChevronRightIcon } from '../../icons/chevron-right';
 import { ChevronDown as ChevronDownIcon } from '../../icons/chevron-down';
@@ -75,7 +76,7 @@ const ItemListTable = (props) => {
                   Name
                 </TableCell>
                 <TableCell width="25%">
-                  Description
+                  Item Category
                 </TableCell>
                 <TableCell>
                   Quantity
@@ -182,7 +183,7 @@ const ItemListTable = (props) => {
                           color="textSecondary"
                           variant="body2"
                         >
-                          {item.cr967_description ? item.cr967_description : "No description given."}
+                          {getCategory(item.cr967_itemcategory)}
                         </Typography>
                       </TableCell>
                       <TableCell>
@@ -279,11 +280,15 @@ const ItemListTable = (props) => {
                             >
                               <Grid
                                 item
-                                md={6}
+                                md={12}
                                 xs={12}
                               >
                                 <Typography variant="h6">
-                                  Details
+                                  Details - 
+                                  <br></br>
+                                  <Link href={"/items/" + item._cr967_foodbankkey_value}> View the other items at {tags.filter(tag => tag.value === item._cr967_foodbankkey_value)[0].label} </Link>
+                                  <br></br>
+                                  <Link href={"/parcels/" + item._cr967_foodbankkey_value}> View the parcels at {tags.filter(tag => tag.value === item._cr967_foodbankkey_value)[0].label} </Link>
                                 </Typography>
                                 <Divider sx={{ my: 2 }} />
                                 <Grid
@@ -292,22 +297,7 @@ const ItemListTable = (props) => {
                                 >
                                   <Grid
                                     item
-                                    md={6}
-                                    xs={12}
-                                  >
-                                    <TextField
-                                      defaultValue={item.cr967_name}
-                                      fullWidth
-                                      label="Name"
-                                      name="name"
-                                      InputProps={{
-                                        readOnly: true,
-                                      }}
-                                    />
-                                  </Grid>
-                                  <Grid
-                                    item
-                                    md={6}
+                                    md={12}
                                     xs={12}
                                   >
                                     <TextField
@@ -318,112 +308,16 @@ const ItemListTable = (props) => {
                                       InputProps={{
                                         readOnly: true,
                                       }}
-                                    />
-                                  </Grid>
-                                  <Grid
-                                    item
-                                    md={6}
-                                    xs={12}
-                                  >
-                                    <TextField
-                                      defaultValue={getCategory(item.cr967_itemcategory)}
-                                      fullWidth
-                                      label="Item Category"
-                                      name="category"
-                                      InputProps={{
-                                        readOnly: true,
-                                      }}
-                                    />
+                                      multiline
+                                      minRows={4}
 
-                                  </Grid>
-                                  <Grid
-                                    item
-                                    md={6}
-                                    xs={12}
-                                  >
-                                    <TextField
-                                      defaultValue={"Link to the stock at this foodbank"}
-                                      disabled
-                                      fullWidth
-                                      label="Foodbank"
-                                      name="foodbank"
                                     />
+                                    
                                   </Grid>
+
                                 </Grid>
                               </Grid>
-                              <Grid
-                                item
-                                md={6}
-                                xs={12}
-                              >
-                                <Typography variant="h6">
-                                  &nbsp;
-                                </Typography>
-                                <Divider sx={{ my: 2 }} />
-                                <Grid
-                                  container
-                                  spacing={3}
-                                >
-                                  <Grid
-                                    item
-                                    md={6}
-                                    xs={12}
-                                  >
-                                    <TextField
-                                      defaultValue={item.cr967_quantity}
-                                      fullWidth
-                                      InputProps={{
-                                        readOnly: true,
-                                      }}
-                                      label="Quantity"
-                                      name="quantity"
-                                      type="number"
-                                    />
-                                  </Grid>
-                                  <Grid
-                                    item
-                                    md={6}
-                                    xs={12}
-                                  >
-                                    <TextField
-                                      defaultValue={
-                                        (() => {
-                                          if (item.cr967_stocklevel === 0) {
-                                            return (
-                                              "Understocked"
-                                            )
-                                          } else if (item.cr967_stocklevel === 1) {
-                                            return (
-                                              "Normal"
-                                            )
-                                          } else {
-                                            return (
-                                              "Overstocked"
-                                            )
-                                          }
-                                        })()
-                                      }
-                                      fullWidth
-                                      label="Stock level"
-                                      name="stock-level"
-                                      InputProps={{
-                                        readOnly: true,
-                                      }}
-                                    />
-                                  </Grid>
-                                  <Grid
-                                    item
-                                    md={6}
-                                    xs={12}
-                                    sx={{
-                                      alignItems: 'center',
-                                      display: 'flex'
-                                    }}
-                                  >
-                          
-                                  </Grid>
-                                </Grid>
-                              </Grid>
+                              
                             </Grid>
                           </CardContent>
                           <Divider />

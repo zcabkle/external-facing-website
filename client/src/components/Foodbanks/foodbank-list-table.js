@@ -20,6 +20,7 @@ import { ChevronRight as ChevronRightIcon } from '../../icons/chevron-right';
 import { ChevronDown as ChevronDownIcon } from '../../icons/chevron-down';
 import { Image as ImageIcon } from '../../icons/image';
 import { Scrollbar } from '../scrollbar';
+import Launch from '@mui/icons-material/Launch';
 
 const FoodbankListTable = (props) => {
 
@@ -52,7 +53,7 @@ const FoodbankListTable = (props) => {
                   Address
                 </TableCell>
                 <TableCell>
-                  Town
+                  Town & Postcode
                 </TableCell>
                 <TableCell>
                   Contact Number
@@ -164,7 +165,7 @@ const FoodbankListTable = (props) => {
                           color="textSecondary"
                           variant="body2"
                         >
-                          {foodbank.cr967_town}
+                          {foodbank.cr967_town}, {foodbank.cr967_postcode}
                         </Typography>
                       </TableCell>
                       <TableCell>
@@ -208,14 +209,20 @@ const FoodbankListTable = (props) => {
                             >
                               <Grid
                                 item
-                                md={6}
+                                md={12}
                                 xs={12}
                               >
                                 <Typography variant="h6">
-                                  Details - <Link href={"/items/" + foodbank.cr967_foodbankid}> View the stock at this foodbank </Link>
-                                <Link href={"/parcels/" + foodbank.cr967_foodbankid}> View the parcels at this foodbank </Link>
+                                  Details -
+                                  <br></br>
                                   
+
                                 </Typography>
+
+                                <Typography variant="body1">
+                                  <Link href={"/items/" + foodbank.cr967_foodbankid}> View the items at {foodbank.cr967_name} </Link>
+                                  <br></br>
+                                  <Link href={"/parcels/" + foodbank.cr967_foodbankid}> View the parcels at  {foodbank.cr967_name} </Link></Typography>
 
                                 <Divider sx={{ my: 2 }} />
                                 <Grid
@@ -224,100 +231,22 @@ const FoodbankListTable = (props) => {
                                 >
                                   <Grid
                                     item
-                                    md={6}
+                                    md={12}
                                     xs={12}
                                   >
-                                    <TextField
-                                      defaultValue={foodbank.cr967_name}
-                                      fullWidth
-                                      label="Name"
-                                      name="name"
-                                      InputProps={{
-                                        readOnly: true,
-                                      }}
-                                    />
-                                  </Grid>
-                                  <Grid
-                                    item
-                                    md={6}
-                                    xs={12}
-                                  >
-
-                                    <TextField
-                                      defaultValue={foodbank.cr967_address}
-                                      fullWidth
-                                      InputProps={{
-                                        readOnly: true,
-                                      }}
-                                      label="Address"
-                                      name="address"
-                                      type="address"
-                                    />
-
+                                  <Typography variant="body1">
+                                    <Link
+                                      href={"https://www.google.com/maps/dir/?api=1&destination="+ foodbank.cr967_address.replace(/\s+/g, '+') + "%2C+" + foodbank.cr967_postcode.replace(/\s+/g, '+') + "%2C+" + foodbank.cr967_name.replace(/\s+/g, '+')+"&travelmode=walking"}
+                                      endDecorator={<Launch />}
+                                      underline="hover">
+                                        Google Maps Directions
+                                      </Link>
+                                    </Typography>
 
                                   </Grid>
                                   <Grid
                                     item
-                                    md={6}
-                                    xs={12}
-                                  >
-                                    <TextField
-                                      defaultValue={foodbank.cr967_phonenumber}
-                                      fullWidth
-                                      label="Phone number"
-                                      name="category"
-                                      InputProps={{
-                                        readOnly: true,
-                                      }}
-                                    />
-
-                                  </Grid>
-                                  <Grid
-                                    item
-                                    md={6}
-                                    xs={12}
-                                  >
-                                    <TextField
-                                      defaultValue={foodbank.cr967_town + ", " + foodbank.cr967_postcode}
-                                      fullWidth
-                                      label="Town & Postcode"
-                                      name="town&postcode"
-                                    />
-
-                                  </Grid>
-                                </Grid>
-                              </Grid>
-                              <Grid
-                                item
-                                md={6}
-                                xs={12}
-                              >
-                                <Typography variant="h6">
-                                  &nbsp;
-                                </Typography>
-                                <Divider sx={{ my: 2 }} />
-                                <Grid
-                                  container
-                                  spacing={3}
-                                >
-                                  <Grid
-                                    item
-                                    md={6}
-                                    xs={12}
-                                  >
-                                    <TextField
-                                      defaultValue={foodbank.cr967_email}
-                                      fullWidth
-                                      label="Email"
-                                      name="email"
-                                      InputProps={{
-                                        readOnly: true,
-                                      }}
-                                    />
-                                  </Grid>
-                                  <Grid
-                                    item
-                                    md={6}
+                                    md={12}
                                     xs={12}
                                   >
                                     <TextField
@@ -330,20 +259,8 @@ const FoodbankListTable = (props) => {
                                       }}
                                       id="outlined-multiline-flexible"
                                       multiline
-                                      rows={4}
+                                      minRows={1}
                                     />
-                                  </Grid>
-
-                                  <Grid
-                                    item
-                                    md={6}
-                                    xs={12}
-                                    sx={{
-                                      alignItems: 'center',
-                                      display: 'flex'
-                                    }}
-                                  >
-
                                   </Grid>
                                 </Grid>
                               </Grid>
