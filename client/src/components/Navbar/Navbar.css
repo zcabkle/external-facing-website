@@ -22,13 +22,13 @@
   top: 0;
   left: -100%;
   transition: 850ms;
-  z-index: 1
+  z-index: 1500
 }
 
 .nav-menu.active {
   left: 0;
   transition: 350ms;
-  z-index: 1
+  z-index: 1500
 }
 
 .nav-text {

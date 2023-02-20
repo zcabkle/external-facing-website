@@ -1,51 +1,56 @@
-import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-import { useNavigate } from "react-router-dom";
-import { indigo } from '@mui/material/colors';
-import { styled } from '@mui/material/styles';
-import Grid from '@mui/material/Grid';
+import { Box, Container, Paper} from '@mui/material';
+import Carousel from 'react-material-ui-carousel';
+import * as AiIcons from 'react-icons/ai';
 
 window.user_type = "";
 
+function Item(props) {
+  return (
+    <Paper style={{ height: "100vh", zIndex:'-3', position: 'absolute'}}>
+      <h2>{props.item.name}</h2>
+      <p>{props.item.description}</p>
+      <img src={"https://images.unsplash.com/photo-1494548162494-384bba4ab999?ixlib=rb-1.2.1&w=1000&q=80"}/>
+    </Paper>
+  )
+}
+
 const LandingPage = () => {
-
-  const navigate = useNavigate();
-
-  const handleClick = (str) => {
-    window.user_type = str;
-    navigate("/foodbanks");
-  };
-
-  const ColorButton = styled(Button)(({ theme }) => ({
-    color: theme.palette.getContrastText(indigo[500]),
-    backgroundColor: indigo[900],
-    '&:hover': {
-      backgroundColor: indigo[700],
+  var items = [
+    {
+      name: "Item 1",
+      description: "Text on Item 1."
     },
-    fontSize: 'small',
-  }));
+    {
+      name: "Item 2",
+      description: "Text on Item 2."
+    }
+  ]
 
   return (
-    <Container maxWidth="100%">
-      <CssBaseline />
-      <Box sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', height: '93vh' }}>
-        <Box sx={{ bgcolor: '#00126b', height: '7vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <h2>External Foodbank Portal </h2>
-        </Box>
-        
-        <Box sx={{ overflow: 'auto', bgcolor: 'fff111', height: '86vh',  display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <Grid container sx={{
-          alignItems: 'center',
-        }}>
-          <Grid item xs={12} style={{ textAlign: "center" }}><p>Who are you accessing the website as?</p></Grid>
-          <Grid item xs={6} style={{ textAlign: "center" }}><ColorButton onClick={() => { handleClick('user') }}> Foodbank User</ColorButton></Grid>
-          <Grid item xs={6} style={{ textAlign: "center" }}><ColorButton onClick={() => { handleClick('donator') }}>Foodbank Donator</ColorButton></Grid>
-        </Grid>
-        </Box>
-      </Box>
-    </Container>)
+    <Box
+      component="main"
+      sx={{
+        flexGrow: 1,
+        py: 8,
+        zIndex: 0
+      }}
+    >
+      <Container maxWidth="xl">
+        <Carousel
+          NextIcon={<AiIcons.AiFillHome />}        // Change the "inside" of the next button to "next"
+          PrevIcon={<AiIcons.AiFillHome />}
+          autoPlay={true}
+          interval={5000}
+          animation={"fade"}
+          style={{ height: "100vh", zIndex:'-3'}}
+        >
+          {
+            items.map((item, i) => <Item key={i} item={item} />)
+          }
+        </Carousel>
+      </Container>
+    </Box>
+  )
 }
 
 export default LandingPage;
