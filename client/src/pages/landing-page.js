@@ -1,4 +1,4 @@
-import { Box, Container, Paper} from '@mui/material';
+import { Box, Container, Paper } from '@mui/material';
 import Carousel from 'react-material-ui-carousel';
 import * as AiIcons from 'react-icons/ai';
 
@@ -6,10 +6,8 @@ window.user_type = "";
 
 function Item(props) {
   return (
-    <Paper style={{ height: "100vh", zIndex:'-3', position: 'absolute'}}>
-      <h2>{props.item.name}</h2>
-      <p>{props.item.description}</p>
-      <img src={"https://images.unsplash.com/photo-1494548162494-384bba4ab999?ixlib=rb-1.2.1&w=1000&q=80"}/>
+    <Paper style={{ width:'100%', zIndex: '-3', textAlign: 'center', alignContent:'center' }}>
+      <img src={"https://images.unsplash.com/photo-1494548162494-384bba4ab999?ixlib=rb-1.2.1&w=1000&q=80"} />
     </Paper>
   )
 }
@@ -31,18 +29,18 @@ const LandingPage = () => {
       component="main"
       sx={{
         flexGrow: 1,
-        py: 8,
-        zIndex: 0
+        py: 8
       }}
     >
-      <Container maxWidth="xl">
+      <Container height='100%' width='100%'>
         <Carousel
-          NextIcon={<AiIcons.AiFillHome />}        // Change the "inside" of the next button to "next"
-          PrevIcon={<AiIcons.AiFillHome />}
+          NextIcon={<AiIcons.AiFillCaretRight />}        // Change the "inside" of the next button to "next"
+          PrevIcon={<AiIcons.AiFillCaretLeft />}
           autoPlay={true}
           interval={5000}
           animation={"fade"}
-          style={{ height: "100vh", zIndex:'-3'}}
+          navButtonsAlwaysVisible={true}
+          style={{ height: "100%", width: '100%', zIndex: '-3' }}
         >
           {
             items.map((item, i) => <Item key={i} item={item} />)
@@ -50,6 +48,7 @@ const LandingPage = () => {
         </Carousel>
       </Container>
     </Box>
+
   )
 }
 

@@ -284,12 +284,16 @@ const ItemListTable = (props) => {
                                 xs={12}
                               >
                                 <Typography variant="h6">
-                                  Details - 
+                                  Details -
                                   <br></br>
+                                </Typography>
+
+                                <Typography variant="body1">
                                   <Link href={"/items/" + item._cr967_foodbankkey_value}> View the other items at {tags.filter(tag => tag.value === item._cr967_foodbankkey_value)[0].label} </Link>
                                   <br></br>
                                   <Link href={"/parcels/" + item._cr967_foodbankkey_value}> View the parcels at {tags.filter(tag => tag.value === item._cr967_foodbankkey_value)[0].label} </Link>
                                 </Typography>
+
                                 <Divider sx={{ my: 2 }} />
                                 <Grid
                                   container
@@ -312,12 +316,12 @@ const ItemListTable = (props) => {
                                       minRows={4}
 
                                     />
-                                    
+
                                   </Grid>
 
                                 </Grid>
                               </Grid>
-                              
+
                             </Grid>
                           </CardContent>
                           <Divider />

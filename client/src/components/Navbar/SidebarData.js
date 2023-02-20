@@ -1,5 +1,4 @@
 import React from 'react';
-import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import * as IoIcons from 'react-icons/io';
 
@@ -11,21 +10,21 @@ export const SidebarData = [
     cName: 'nav-text'
   },
   {
-    title: 'Foodbank Branches',
+    title: 'Foodbanks',
     path: '/foodbanks',
-    icon: <FaIcons.FaCartPlus />,
+    icon: < AiIcons.AiFillShop />,
     cName: 'nav-text'
   },
   {
     title: 'Items',
     path: '/items',
-    icon: <IoIcons.IoMdPeople />,
+    icon: <AiIcons.AiFillShopping />,
     cName: 'nav-text'
   },
   {
     title: 'Help',
     path: '/help',
-    icon: <IoIcons.IoMdPeople />,
+    icon: <IoIcons.IoIosHelpCircle />,
     cName: 'nav-text'
   }
 ];
