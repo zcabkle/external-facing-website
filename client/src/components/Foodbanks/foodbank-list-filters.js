@@ -1,35 +1,44 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Chip, Divider, Input, Typography } from '@mui/material';
 import { useUpdateEffect } from '../../hooks/use-update-effect';
 import { Search as SearchIcon } from '../../icons/search';
+import { MultiSelect } from '../multi-select';
 
 export const ListFilters = (props) => {
-  const { onChange, ...other } = props;
+  const { onChange, postcodeOptions, ...other } = props;
   const [queryValue, setQueryValue] = useState('');
   const [filterItems, setFilterItems] = useState([]);
 
+  console.log("POSTCODES RECIEVED IN COMPONENT", postcodeOptions);
+
   useUpdateEffect(() => {
-      const filters = {
-        name: undefined,
-      };
+    const filters = {
+      name: undefined,
+      postcode: undefined
+    };
 
-      // Transform the filter items in an object that can be used by the parent component to call the
-      // serve with the updated filters
-      filterItems.forEach((filterItem) => {
-        switch (filterItem.field) {
-          case 'name':
-            // There will (or should) be only one filter item with field "name"
-            // so we can set up it directly
-            filters.name = filterItem.value;
-            break;
-          default:
-            break;
-        }
-      });
+    // Transform the filter items in an object that can be used by the parent component to call the
+    // serve with the updated filters
+    filterItems.forEach((filterItem) => {
+      switch (filterItem.field) {
+        case 'name':
+          // There will (or should) be only one filter item with field "name"
+          // so we can set up it directly
+          filters.name = filterItem.value;
+          break;
+        case 'postcode':
+          // There will (or should) be only one filter item with field "name"
+          // so we can set up it directly
+          filters.postcode = filterItem.value;
+          break;
+        default:
+          break;
+      }
+    });
 
-      onChange?.(filters);
-    },
+    onChange?.(filters);
+  },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [filterItems]);
 
@@ -74,6 +83,41 @@ export const ListFilters = (props) => {
       setQueryValue('');
     }
   };
+
+  const handlePostcodeChange = (values) => {
+    // Stock can only have one value, even if displayed as multi-select, so we select the first one.
+    // This example allows you to select one value or "All", which is not included in the
+    // rest of multi-selects.
+
+    setFilterItems((prevState) => {
+      // First cleanup the previous filter items
+      const newFilterItems = prevState.filter((filterItem) => filterItem.field !== 'postcode');
+      const latestValue = values[values.length - 1];
+
+      if (typeof latestValue !== 'undefined' && latestValue !== 'all'){
+        newFilterItems.push({
+          label: 'Postcode',
+          field: 'postcode',
+          value: latestValue,
+          displayValue: postcodeOptions.filter((option) => option.value === latestValue)[0].label
+        });
+      }
+      return newFilterItems;
+    });
+  };
+
+  const postcodeValues = useMemo(() => {
+    const values = filterItems
+      .filter((filterItems) => filterItems.field === 'postcode')
+      .map((filterItems) => filterItems.value);
+
+    // Since we do not display the "all" as chip, we add it to the multi-select as a selected value
+    if (values.length === 0) {
+      values.unshift('all');
+    }
+
+    return values;
+  }, [filterItems]);
 
   return (
     <div {...other}>
@@ -126,9 +170,9 @@ export const ListFilters = (props) => {
                     }}
                   >
                     <>
-                        <span>
-                          {filterItem.label}
-                        </span>
+                      <span>
+                        {filterItem.label}
+                      </span>
                       :
                       {' '}
                       {filterItem.displayValue || filterItem.value}
@@ -161,6 +205,12 @@ export const ListFilters = (props) => {
           p: 1
         }}
       >
+        <MultiSelect
+          label="Postcode"
+          onChange={handlePostcodeChange}
+          options={postcodeOptions}
+          value={postcodeValues}
+        />
       </Box>
     </div>
   );

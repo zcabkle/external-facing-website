@@ -171,7 +171,8 @@ const FoodbankListTable = (props) => {
                       <TableCell>
                         <Typography color="textSecondary"
                           variant="body2">
-                          {foodbank.cr967_phonenumber}
+
+                          <a href={'tel:' + foodbank.cr967_phonenumber}>{foodbank.cr967_phonenumber}</a>
                         </Typography>
                       </TableCell>
                       <TableCell>
@@ -179,7 +180,7 @@ const FoodbankListTable = (props) => {
                           color="textSecondary"
                           variant="body2"
                         >
-                          {foodbank.cr967_email}
+                          <a href={"mailto:" + foodbank.cr967_email}>{foodbank.cr967_email}</a>
                         </Typography>
                       </TableCell>
 

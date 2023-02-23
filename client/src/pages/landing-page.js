@@ -7,6 +7,7 @@ window.user_type = "";
 function Item(props) {
   return (
     <Paper style={{ width:'100%', zIndex: '-3', textAlign: 'center', alignContent:'center' }}>
+      <p>{props.item.name} {props.item.description}</p>
       <img src={"https://images.unsplash.com/photo-1494548162494-384bba4ab999?ixlib=rb-1.2.1&w=1000&q=80"} />
     </Paper>
   )
