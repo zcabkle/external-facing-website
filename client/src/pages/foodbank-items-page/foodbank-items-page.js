@@ -35,17 +35,6 @@ const FoodbankItemsPage = () => {
     }
   }, [guid]);
 
-  var temp_foodbank_tags = foodbanks.map(foodbank => {
-    const container = {};
-
-    container['label'] = foodbank.cr967_name;
-    container['value'] = foodbank.cr967_foodbankid;
-
-    return container;
-  })
-
-  const foodbank_tags = [{label:'All', value:'all'}].concat(temp_foodbank_tags);
-
   const applyFilters = (products, filters) => products.filter((product) => {
     if (filters.name) {
       const nameMatched = product.cr967_name.toLowerCase().includes(filters.name.toLowerCase());
@@ -134,7 +123,7 @@ const FoodbankItemsPage = () => {
           </Card>
         ) : (
           <Card>
-            <ListFilters onChange={handleFiltersChange} foodbankOptions={foodbank_tags}/>
+            <ListFilters onChange={handleFiltersChange} />
             <FoodbankItemsListTable
               onPageChange={handlePageChange}
               onRowsPerPageChange={handleRowsPerPageChange}

@@ -25,7 +25,7 @@ const stockOptions = [
 ];
 
 export const ListFilters = (props) => {
-  const { onChange, foodbankOptions, ...other } = props;
+  const { onChange, ...other } = props;
   const [queryValue, setQueryValue] = useState('');
   const [filterItems, setFilterItems] = useState([]);
 
