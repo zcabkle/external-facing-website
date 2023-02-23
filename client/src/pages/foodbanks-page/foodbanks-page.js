@@ -44,7 +44,7 @@ const FoodbanksPage = () => {
   }, []);
 
   var postcodes = getPostcodes(foodbanks);
-  postcodes = [{label:'All', value:'all'}].concat(postcodes);
+  postcodes = [{ label: 'All', value: 'all' }].concat(postcodes);
 
   const applyFilters = (products, filters) => products.filter((product) => {
     if (filters.name) {
@@ -109,26 +109,31 @@ const FoodbanksPage = () => {
           </Grid>
         </Box>
 
-        {(loading || error) ? (
-          <Card><Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: "center",
-              minHeight: "10vh",
-              mt: 3
-            }}>
-            {error || <CircularProgress />}
-          </Box></Card>
-        ) : (
-          <Card><ListFilters onChange={handleFiltersChange} postcodeOptions={postcodes} />
-            <FoodbankListTable
-              onPageChange={handlePageChange}
-              onRowsPerPageChange={handleRowsPerPageChange}
-              foodbanks={paginatedFoodbanks}
-              foodbanksCount={filteredFoodbanks.length}
-              page={page}
-              rowsPerPage={rowsPerPage} /></Card>)}
+        {
+          (loading || error) ? (
+            <Card>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: "center",
+                  minHeight: "10vh",
+                  mt: 3
+                }}>
+                {error || <CircularProgress />}
+              </Box></Card>
+          ) : (
+            <Card>
+              <ListFilters onChange={handleFiltersChange} postcodeOptions={postcodes} />
+              <FoodbankListTable
+                onPageChange={handlePageChange}
+                onRowsPerPageChange={handleRowsPerPageChange}
+                foodbanks={paginatedFoodbanks}
+                foodbanksCount={filteredFoodbanks.length}
+                page={page}
+                rowsPerPage={rowsPerPage} />
+            </Card>)
+          }
       </Container>
     </Box>
   );

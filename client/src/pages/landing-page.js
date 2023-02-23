@@ -1,4 +1,4 @@
-import { Box, Container, Paper } from '@mui/material';
+import { Box, Container, Paper, Typography, ButtonGroup, Button } from '@mui/material';
 import Carousel from 'react-material-ui-carousel';
 import * as AiIcons from 'react-icons/ai';
 
@@ -6,9 +6,24 @@ window.user_type = "";
 
 function Item(props) {
   return (
-    <Paper style={{ width:'100%', zIndex: '-3', textAlign: 'center', alignContent:'center' }}>
-      <p>{props.item.name} {props.item.description}</p>
-      <img src={"https://images.unsplash.com/photo-1494548162494-384bba4ab999?ixlib=rb-1.2.1&w=1000&q=80"} />
+    <Paper style={{ zIndex: '-3', textAlign: 'center', alignContent: 'center' }}>
+      <img width="auto" height="500vh" src={props.item.src} />
+      <Typography variant="h5">
+        {props.item.description}
+        <br></br>
+      </Typography>
+    </Paper>
+  )
+}
+
+function ChoosePersona() {
+  return (
+    <Paper style={{ zIndex: '-3', textAlign: 'center', alignContent: 'center'}}>
+      <ButtonGroup variant="contained" aria-label="outlined primary button group">
+        <Button>One</Button>
+        <Button>Two</Button>
+        <Button>Three</Button>
+      </ButtonGroup>
     </Paper>
   )
 }
@@ -17,11 +32,18 @@ const LandingPage = () => {
   var items = [
     {
       name: "Item 1",
-      description: "Text on Item 1."
+      description: "We are requesting donations, it's a great way to help out your local community.",
+      src: "./fooddonations.jpg"
     },
     {
       name: "Item 2",
-      description: "Text on Item 2."
+      description: "Text on Item 2.",
+      src: "/foodbank_items.jpg"
+    },
+    {
+      name: "Item 3",
+      description: "Text on Item 3.",
+      src: "/parcel.svg"
     }
   ]
 
@@ -33,13 +55,15 @@ const LandingPage = () => {
         py: 8
       }}
     >
-      <Container height='100%' width='100%'>
+      <Container maxWidth="xl">
+      <ChoosePersona />
+      <br></br>
         <Carousel
-          NextIcon={<AiIcons.AiFillCaretRight />}        // Change the "inside" of the next button to "next"
+          NextIcon={<AiIcons.AiFillCaretRight />}
           PrevIcon={<AiIcons.AiFillCaretLeft />}
-          autoPlay={true}
+          autoPlay={false}
           interval={5000}
-          animation={"fade"}
+          animation={"slide"}
           navButtonsAlwaysVisible={true}
           style={{ height: "100%", width: '100%', zIndex: '-3' }}
         >
