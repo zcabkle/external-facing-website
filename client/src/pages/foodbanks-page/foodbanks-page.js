@@ -43,6 +43,8 @@ const FoodbanksPage = () => {
     }
   }, []);
 
+  console.log("GOT ITEM from foodbanks page" + sessionStorage.getItem("userType"))
+
   var postcodes = getPostcodes(foodbanks);
   postcodes = [{ label: 'All', value: 'all' }].concat(postcodes);
 
