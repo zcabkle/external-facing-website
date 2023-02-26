@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Box, Chip, Divider, Input, Typography } from '@mui/material';
+import { Box, Chip, Divider, Input, Typography, Grid } from '@mui/material';
 import { useUpdateEffect } from '../../hooks/use-update-effect';
 import { Search as SearchIcon } from '../../icons/search';
 import { MultiSelect } from '../multi-select';
@@ -199,30 +199,63 @@ export const ListFilters = (props) => {
 
   return (
     <div {...other}>
-      <Box
-        sx={{
-          alignItems: 'center',
-          display: 'flex',
-          p: 2
-        }}
-      >
-        <SearchIcon fontSize="small" />
-        <Box
-          sx={{
-            flexGrow: 1,
-            ml: 3
-          }}
-        >
-          <Input
-            disableUnderline
-            fullWidth
-            onChange={handleQueryChange}
-            onKeyUp={handleQueryKeyup}
-            placeholder="Search by product name"
-            value={queryValue}
-          />
-        </Box>
-      </Box>
+      <Grid container
+        spacing={3} >
+        <Grid item sm={9} xs={12}>
+
+          <Box
+            sx={{
+              alignItems: 'center',
+              display: 'flex',
+              p: 2
+            }}
+          >
+
+            <SearchIcon fontSize="small" />
+            <Box
+              sx={{
+                flexGrow: 1,
+                ml: 3
+              }}
+            >
+              <Input
+                disableUnderline
+                fullWidth
+                onChange={handleQueryChange}
+                onKeyUp={handleQueryKeyup}
+                placeholder="Filter by product name"
+                value={queryValue}
+              />
+            </Box>
+          </Box>
+
+        </Grid>
+        <Divider />
+
+        <Grid item sm={3} xs={12}>
+          <Box
+            sx={{
+              alignItems: 'center',
+              display: 'flex',
+              p: 2
+            }}
+          >
+            <MultiSelect
+          label="Stock"
+          onChange={handleStockChange}
+          options={stockOptions}
+          value={stockValues}
+        />
+         <MultiSelect
+          label="Foodbank"
+          onChange={handleFoodbankChange}
+          options={foodbankOptions}
+          value={foodbankValues}
+        />
+          </Box>
+        </Grid>
+
+      </Grid>
       <Divider />
       {filterItems.length > 0
         ? (
@@ -283,18 +316,7 @@ export const ListFilters = (props) => {
           p: 1
         }}
       >
-        <MultiSelect
-          label="Stock"
-          onChange={handleStockChange}
-          options={stockOptions}
-          value={stockValues}
-        />
-         <MultiSelect
-          label="Foodbank"
-          onChange={handleFoodbankChange}
-          options={foodbankOptions}
-          value={foodbankValues}
-        />
+        
       </Box>
     </div>
   );

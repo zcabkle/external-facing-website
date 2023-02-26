@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Box, Chip, Divider, Input, Typography } from '@mui/material';
+import { Box, Chip, Divider, Grid, Input, Typography } from '@mui/material';
 import { useUpdateEffect } from '../../hooks/use-update-effect';
 import { Search as SearchIcon } from '../../icons/search';
 import { MultiSelect } from '../multi-select';
@@ -94,7 +94,7 @@ export const ListFilters = (props) => {
       const newFilterItems = prevState.filter((filterItem) => filterItem.field !== 'postcode');
       const latestValue = values[values.length - 1];
 
-      if (typeof latestValue !== 'undefined' && latestValue !== 'all'){
+      if (typeof latestValue !== 'undefined' && latestValue !== 'all') {
         newFilterItems.push({
           label: 'Postcode',
           field: 'postcode',
@@ -121,30 +121,58 @@ export const ListFilters = (props) => {
 
   return (
     <div {...other}>
-      <Box
-        sx={{
-          alignItems: 'center',
-          display: 'flex',
-          p: 2
-        }}
-      >
-        <SearchIcon fontSize="small" />
-        <Box
-          sx={{
-            flexGrow: 1,
-            ml: 3
-          }}
-        >
-          <Input
-            disableUnderline
-            fullWidth
-            onChange={handleQueryChange}
-            onKeyUp={handleQueryKeyup}
-            placeholder="Filter by foodbank name"
-            value={queryValue}
-          />
-        </Box>
-      </Box>
+
+      <Grid container
+        spacing={3} >
+        <Grid item sm={10} xs={12}>
+
+          <Box
+            sx={{
+              alignItems: 'center',
+              display: 'flex',
+              p: 2
+            }}
+          >
+
+            <SearchIcon fontSize="small" />
+            <Box
+              sx={{
+                flexGrow: 1,
+                ml: 3
+              }}
+            >
+              <Input
+                disableUnderline
+                fullWidth
+                onChange={handleQueryChange}
+                onKeyUp={handleQueryKeyup}
+                placeholder="Filter by foodbank name"
+                value={queryValue}
+              />
+            </Box>
+          </Box>
+
+        </Grid>
+        <Divider />
+
+        <Grid item sm={2} xs={12}>
+          <Box
+            sx={{
+              alignItems: 'center',
+              display: 'flex',
+              p: 2
+            }}
+          >
+            <MultiSelect
+              label="Postcode"
+              onChange={handlePostcodeChange}
+              options={postcodeOptions}
+              value={postcodeValues}
+            />
+          </Box>
+        </Grid>
+      </Grid>
+
       <Divider />
       {filterItems.length > 0
         ? (
@@ -197,21 +225,6 @@ export const ListFilters = (props) => {
           </Box>
         )}
       <Divider />
-      <Box
-        sx={{
-          alignItems: 'center',
-          display: 'flex',
-          flexWrap: 'wrap',
-          p: 1
-        }}
-      >
-        <MultiSelect
-          label="Postcode"
-          onChange={handlePostcodeChange}
-          options={postcodeOptions}
-          value={postcodeValues}
-        />
-      </Box>
     </div>
   );
 };
