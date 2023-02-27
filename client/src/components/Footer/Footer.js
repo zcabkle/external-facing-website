@@ -11,7 +11,7 @@ export const Footer = () => {
         textAlign: 'center',
         backgroundColor: 'background.default'
       }}>
-        Copyright © 2023 Kamil Ebanks & UCL
+        Copyright © 2023 Kamil Ebanks & Insight?
       </Card>
       <Card sx={{
         justifyContent: "center",

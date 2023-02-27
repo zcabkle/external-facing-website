@@ -127,6 +127,31 @@ app.get('/parcels/:id', async (req, res) => {
     res.json({ "parcels": json_content, 'foodbank_names':json_content2 });
 })
 
+app.get('/stats', async (req, res) => {
+    var url = `https://org6e7090ee.api.crm4.dynamics.com/api/data/v9.2/cr967_items/$count`
+
+    var bearerToken = await getToken();
+
+    var response = await makeRequest(bearerToken, url);
+    var json_content = await response.json();
+
+    var url = `https://org6e7090ee.api.crm4.dynamics.com/api/data/v9.2/cr967_foodbanks/$count`
+
+    var bearerToken = await getToken();
+
+    var response = await makeRequest(bearerToken, url);
+    var json_content2 = await response.json();
+
+    var url = `https://org6e7090ee.api.crm4.dynamics.com/api/data/v9.2/cr967_outgoingrecords/$count`
+
+    var bearerToken = await getToken();
+
+    var response = await makeRequest(bearerToken, url);
+    var json_content3 = await response.json();
+
+    res.json({ "items_count": json_content, "foodbanks_count": json_content2, 'visits_count':json_content3 });
+})
+
 app.listen(8080, async () => {
     console.log("app listening on port 8080")
 })
