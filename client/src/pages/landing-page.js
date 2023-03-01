@@ -361,7 +361,6 @@ const LandingPage = () => {
         </Grid>
       </Container>
     </Box>
-
   )
 }
 
