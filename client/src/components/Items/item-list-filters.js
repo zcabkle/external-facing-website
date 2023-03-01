@@ -200,8 +200,9 @@ export const ListFilters = (props) => {
   return (
     <div {...other}>
       <Grid container
-        spacing={3} >
-        <Grid item sm={9} xs={12}>
+        spacing={0} >
+        <Grid item md={9} sm={12}>
+        <Divider  display={{ xs: 'block', sm: 'none' }} />
 
           <Box
             sx={{
@@ -228,14 +229,13 @@ export const ListFilters = (props) => {
               />
             </Box>
           </Box>
-
         </Grid>
-        <Divider />
-
-        <Grid item sm={3} xs={12}>
+        
+        <Grid item md={3} sm={12}>
+        <Divider  display={{ xs: 'block', sm: 'none' }} />
           <Box
             sx={{
-              alignItems: 'center',
+              alignItems: 'right',
               display: 'flex',
               p: 2
             }}
@@ -254,7 +254,6 @@ export const ListFilters = (props) => {
         />
           </Box>
         </Grid>
-
       </Grid>
       <Divider />
       {filterItems.length > 0

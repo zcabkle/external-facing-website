@@ -75,6 +75,7 @@ export const ListFilters = (props) => {
 
   return (
     <div {...other}>
+      <Divider  display={{ xs: 'block', sm: 'none' }} />
       <Box
         sx={{
           alignItems: 'center',

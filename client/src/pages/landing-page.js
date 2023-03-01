@@ -127,8 +127,51 @@ const LandingPage = () => {
       }}
     >
       <Container maxWidth="xl">
-        <ChoosePersona />
-        <br></br>
+
+        <Grid
+          container
+          justifyContent="space-between"
+        >
+          <Grid
+            item
+            xs={12}
+          >
+            <Card>
+              <CardContent>
+                <Box
+                  sx={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    display: 'flex'
+                  }}
+                >
+                  <Typography
+                    color="primary.main"
+                    sx={{ pl: 1 }}
+                    variant="h6"
+                  >
+                    <FaIcons.FaRocket
+                      color="primary"
+                      size={20}
+                    />
+                    &nbsp;
+                    Our Mission Statement
+                  </Typography>
+                </Box>
+                <Typography
+                  variant="h6"
+                  align="center"
+                  sx={{ mt: 2, align: 'center' }}
+                >
+                  With great pride, we announce that our nationwide network of foodbanks, bringing hope and sustenance to those in need. <br />
+                  Join us in our mission to combat hunger and make a real difference in the lives of individuals and families across the country. Together, we can create a world where no one goes hungry.
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
+        <br />
+
         <Carousel
           NextIcon={<AiIcons.AiFillCaretRight />}
           PrevIcon={<AiIcons.AiFillCaretLeft />}
@@ -142,9 +185,9 @@ const LandingPage = () => {
             items.map((item, i) => <Item key={i} item={item} />)
           }
         </Carousel>
-
         <br></br>
-
+        <ChoosePersona />
+        <br></br>
         <Grid
           container
           justifyContent="space-between"
@@ -180,7 +223,8 @@ const LandingPage = () => {
                   variant="h6"
                   sx={{ mt: 2 }}
                 >
-                  {foodbanksCount} foodbank branches are registered on the app!
+
+                  We are excited to announce that {foodbanksCount} branches are registered to our foodbank network! This is a great milestone in our efforts to combat food insecurity and provide easier access to those in need.
                 </Typography>
               </CardContent>
               <Divider />
@@ -227,7 +271,7 @@ const LandingPage = () => {
                   variant="h6"
                   sx={{ mt: 2 }}
                 >
-                  {visitsCount} visits recorded across our nationwide network!
+                  Our nationwide network has proudly recorded {visitsCount} visits, providing unparalleled access to our foodbanks. Join us and experience the difference today!
                 </Typography>
               </CardContent>
               <Divider />
@@ -236,8 +280,8 @@ const LandingPage = () => {
                   endIcon={<ArrowRightIcon fontSize="small" />}
                   size="small"
                 >
-                  <Link href="/help" underline="none">
-                    Find Help
+                  <Link href="/foodbanks" underline="none">
+                    Dicover Foodbanks
                   </Link>
 
                 </Button>
@@ -276,7 +320,7 @@ const LandingPage = () => {
                   variant="h6"
                   sx={{ mt: 2 }}
                 >
-                  {itemCount} items offered across the foodbank network!
+                  We are pleased to announce that our foodbank network now offers a total of {itemCount} different items to help combat hunger and provide much-needed sustenance to those in need.
                 </Typography>
               </CardContent>
               <Divider />
@@ -325,8 +369,14 @@ const LandingPage = () => {
                   color="textSecondary"
                   variant="body1"
                 >
-                  This project seeks to reduce food wastage by providing more powerful insights to foodbank workers, users and donators in order to drive more useful donations across the UK in order to better serve the community.
-                  Information shown is completely synced with the foodbanks systems giving an up-to-date snapshot of the situation at each foodbank.
+
+                  We are proud to introduce our latest project, which aims to reduce food wastage by providing more powerful insights to foodbank workers, users, and donators.
+                  By doing so, we hope to drive more useful donations across the UK and better serve our community in the fight against hunger. Our system is completely synced with the foodbanks' own systems,
+                  providing an up-to-date snapshot of the situation at each foodbank. This allows you to make the most effective use of donations and ensure that they reach those who need them most.
+                  <br /><br/>
+                  We encourage everyone to take advantage of the variety of items available through our network and to spread the word about the resources we offer.
+                  With your help, we can make a real difference in the fight against food insecurity and create a more sustainable future for all. Thank you for your support.
+
                 </Typography>
               </CardContent>
             </Card>
@@ -365,8 +415,13 @@ const LandingPage = () => {
                   color="textSecondary"
                   variant="body1"
                 >
-                  <li>It provides donators with an opportunity to donate essential items that are currently needed by their local community. This helps donators, both large and small, to make a larger impact.</li>
-                  <li>It also gives foodbank users the ability to browse stock before visiting a foodbank. Enabling them to visit the foodbanks that best cater to their needs.</li>
+
+                  <li>For donators, our website provides an easy and convenient way to donate find where to donate the essential items that are currently needed by their local community.
+                    This helps both large and small donators to make a larger impact and support those who are struggling with hunger.</li>
+                  <li>For foodbank users, our website offers the ability to browse stock before visiting a foodbank, enabling them to visit the foodbanks that best cater to their specific needs.
+                    By utilizing our website, foodbank users can access the resources they need to help them and their families thrive.</li>
+                  <br />We are committed to serving both donators and foodbank users alike, and we encourage everyone to explore our website
+                  and join us in our mission to create a world where no one goes hungry. Thank you for your support.
                 </Typography>
               </CardContent>
             </Card>
