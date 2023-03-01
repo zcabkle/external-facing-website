@@ -40,7 +40,6 @@ const LandingPage = () => {
       fetch("http://localhost:8080/stats")
         .then(res => res.json())
         .then(res => {
-          console.log(res)
           setItemCount(res.items_count)
           setFoodbanksCount(res.foodbanks_count)
           setVisitsCount(res.visits_count)
@@ -52,13 +51,12 @@ const LandingPage = () => {
     }
   }, []);
 
-  console.log(itemCount)
-
   function ChoosePersona() {
     return (
       <Paper style={{ zIndex: '-3', textAlign: 'center', alignContent: 'center' }}>
         <br></br>
-        <Typography variant='h6'>Who are you visiting this website as?<br></br></Typography>
+        <Typography variant='h6'>Who are you visiting this website as?</Typography>
+        <br></br>
         <ButtonGroup variant="contained" aria-label="outlined primary button group">
           {userType === 'donator' ? <Button sx={{ color: 'white' }} onClick={() => {
             window.sessionStorage.setItem("userType", "donator");
@@ -76,11 +74,23 @@ const LandingPage = () => {
           }}>Foodbank User</Button>}
         </ButtonGroup>
 
-        {userType === '' && <Typography variant='body1'> <br></br> </Typography>}
+        <Box
+          sx={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            display: 'flex',
+            mx: '50px'
+          }}
+        >
+          {userType === '' && <Typography variant='body1'> <br></br> </Typography>}
 
-        {userType === 'user' && <Typography variant='body1'> Information here to explain how a foodbank user should use the site. <br></br><br></br></Typography>}
-
-        {userType === 'donator' && <Typography variant='body1'> Information here to explain how a foodbank donator should use the site. <br></br><br></br></Typography>}
+          {userType === 'user' && <Typography variant='body1'> <br />  <li>Use the <Link href='/foodbanks'>foodbank tab</Link> to find foodbanks and browse their items or parcels from the dropdowns. </li>
+            <li> Alternatively, view the items available across all of our branches and filter them on the <Link href='/items'>items tab</Link>. </li>
+            <li> Use the contact details provided to book a visit to the foodbank that can best support your needs at the moment. </li> <br /><br /></Typography>}
+          {userType === 'donator' && <Typography variant='body1'> <br />  <li>Use the <Link href='/foodbanks'>foodbank tab</Link> to find foodbanks and browse which items are in need at those foodbanks. </li>
+            <li> Alternatively, view the items available across all of our branches on the <Link href='/items'>items tab</Link> to see which foodbanks are in need of donations. </li>
+            <li> Use the contact details provided to book a visit to the foodbank that you would like to help out. </li> <br /><br /> </Typography>}
+        </Box>
       </Paper>
     )
   }
@@ -88,18 +98,23 @@ const LandingPage = () => {
   var items = [
     {
       name: "Item 1",
+      description: "Providing help when you need it most!",
+      src: "./foodbank_smiling.png"
+    },
+    {
+      name: "Item 1",
       description: "We are requesting donations, it's a great way to help out your local community.",
       src: "./fooddonations.jpg"
     },
     {
       name: "Item 2",
-      description: "Text on Item 2.",
+      description: "A wide variety of items are available, use the items tab to see what is currently in stock.",
       src: "/foodbank_items.jpg"
     },
     {
-      name: "Item 3",
-      description: "Text on Item 3.",
-      src: "/parcel.svg"
+      name: "Item 4",
+      description: "Cash donations are accepted, contact your local foodbank to arrange this.",
+      src: "/coins.jpg"
     }
   ]
 
@@ -135,7 +150,6 @@ const LandingPage = () => {
           justifyContent="space-between"
           spacing={3}
         >
-
           <Grid
             item
             md={4}
@@ -182,7 +196,6 @@ const LandingPage = () => {
               </CardActions>
             </Card>
           </Grid>
-
           <Grid
             item
             md={4}

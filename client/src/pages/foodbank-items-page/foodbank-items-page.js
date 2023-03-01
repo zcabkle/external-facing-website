@@ -83,7 +83,6 @@ const FoodbankItemsPage = () => {
   const paginatedItems = applyPagination(filteredItems, page, rowsPerPage);
 
   const foodbankName = foodbanks?.filter((foodbank) => foodbank.cr967_foodbankid === guid)[0]?.cr967_name
-  console.log(foodbankName)
 
   return (
     <Box

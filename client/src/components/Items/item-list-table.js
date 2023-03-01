@@ -59,7 +59,7 @@ const ItemListTable = (props) => {
     tags,
   } = props;
   const [openProduct, setOpenProduct] = useState(null);
-
+  
   const handleOpenProduct = (productId) => {
     setOpenProduct((prevValue) => (prevValue === productId ? null : productId));
   };
@@ -251,7 +251,8 @@ const ItemListTable = (props) => {
                           color="textSecondary"
                           variant="body2"
                         >
-                          {tags.filter(tag => tag.value === item._cr967_foodbankkey_value)[0].label}
+                          {tags.filter(tag => tag.value === item._cr967_foodbankkey_value)[0].label}<br/>
+                          <Link href="/foodbanks">Browse All Foodbanks</Link>
                         </Typography>
                       </TableCell>
                     </TableRow>

@@ -43,8 +43,6 @@ const FoodbanksPage = () => {
     }
   }, []);
 
-  console.log("GOT ITEM from foodbanks page" + sessionStorage.getItem("userType"))
-
   var postcodes = getPostcodes(foodbanks);
   postcodes = [{ label: 'All', value: 'all' }].concat(postcodes);
 
@@ -82,8 +80,6 @@ const FoodbanksPage = () => {
 
   const applyPagination = (products, page, rowsPerPage) => products.slice(page * rowsPerPage,
     page * rowsPerPage + rowsPerPage);
-
-  //console.log('HERE ARE THE POSTCODES', postcodes)
 
   const filteredFoodbanks = applyFilters(foodbanks, filters);
   const paginatedFoodbanks = applyPagination(filteredFoodbanks, page, rowsPerPage);

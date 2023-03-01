@@ -10,8 +10,6 @@ export const ListFilters = (props) => {
   const [queryValue, setQueryValue] = useState('');
   const [filterItems, setFilterItems] = useState([]);
 
-  console.log("POSTCODES RECIEVED IN COMPONENT", postcodeOptions);
-
   useUpdateEffect(() => {
     const filters = {
       name: undefined,
