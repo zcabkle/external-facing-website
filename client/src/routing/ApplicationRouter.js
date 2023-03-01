@@ -5,15 +5,14 @@ import FoodbanksPage from "../pages/foodbanks-page/foodbanks-page";
 import FoodbankItemsPage from "../pages/foodbank-items-page/foodbank-items-page";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import FoodbankParcelsPage from "../pages/foodbank-parcels-page/foodbank-parcels-page";
-import Navbar from '../components/Navbar/Navbar';
-import Navbar2 from "../components/Navbar2/Navbar2";
+import Navbar from "../components/Navbar/Navbar";
 import { Footer } from "../components/Footer/Footer";
 
 function ApplicationRouter() {
     return (
         <>
             <Router>
-                <Navbar2 />
+                <Navbar />
                 <Routes>
                     <Route path="/" element={<LandingPage />} />
                     <Route path='foodbanks' element={< FoodbanksPage />} />
