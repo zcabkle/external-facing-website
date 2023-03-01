@@ -216,15 +216,16 @@ const FoodbankListTable = (props) => {
                                 <Typography variant="h6">
                                   Details -
                                   <br></br>
-                                  
+
 
                                 </Typography>
 
                                 <Typography variant="body1">
                                   <Link href={"/items/" + foodbank.cr967_foodbankid}> View the items at {foodbank.cr967_name} </Link>
                                   <br></br>
-                                  <Link href={"/parcels/" + foodbank.cr967_foodbankid}> View the parcels at  {foodbank.cr967_name} </Link></Typography>
 
+                                  {sessionStorage.getItem("userType") == 'user' && <Link href={"/parcels/" + foodbank.cr967_foodbankid}> View the parcels at  {foodbank.cr967_name} </Link>}
+                                </Typography>
                                 <Divider sx={{ my: 2 }} />
                                 <Grid
                                   container
@@ -235,11 +236,11 @@ const FoodbankListTable = (props) => {
                                     md={12}
                                     xs={12}
                                   >
-                                  <Typography variant="body1">
-                                    <Link
-                                      href={"https://www.google.com/maps/dir/?api=1&destination="+ foodbank.cr967_address.replace(/\s+/g, '+') + "%2C+" + foodbank.cr967_postcode.replace(/\s+/g, '+') + "%2C+" + foodbank.cr967_name.replace(/\s+/g, '+')+"&travelmode=walking"}
-                                      endDecorator={<Launch />}
-                                      underline="hover">
+                                    <Typography variant="body1">
+                                      <Link
+                                        href={"https://www.google.com/maps/dir/?api=1&destination=" + foodbank.cr967_address.replace(/\s+/g, '+') + "%2C+" + foodbank.cr967_postcode.replace(/\s+/g, '+') + "%2C+" + foodbank.cr967_name.replace(/\s+/g, '+') + "&travelmode=walking"}
+                                        endDecorator={<Launch />}
+                                        underline="hover">
                                         Google Maps Directions
                                       </Link>
                                     </Typography>
